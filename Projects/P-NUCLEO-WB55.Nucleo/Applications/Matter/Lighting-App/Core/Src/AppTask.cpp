@@ -65,7 +65,7 @@ chip::DeviceLayer::FactoryDataProvider mFactoryDataProvider;
 #define APP_EVENT_QUEUE_SIZE 10
 #define NVM_TIMEOUT 1000  // timer to handle PB to save data in nvm or do a factory reset
 #define DELAY_NVM 5000 // save data in nvm after commissioning with a delay of 5 sec
-#define STM32_LIGHT_ENDPOINT_ID 1
+#define STM32_THERMO_ENDPOINT_ID 1
 
 static QueueHandle_t sAppEventQueue;
 TimerHandle_t sPushButtonTimeoutTimer;
@@ -367,14 +367,14 @@ void AppTask::UpdateClusterState(void) {
     ChipLogProgress(NotSpecified, "UpdateClusterState");
     // Write the new on/off value
     EmberAfStatus status = Clusters::OnOff::Attributes::OnOff::Set(
-    STM32_LIGHT_ENDPOINT_ID, LightingMgr().IsTurnedOn());
+    STM32_THERMO_ENDPOINT_ID, LightingMgr().IsTurnedOn());
     if (status != EMBER_ZCL_STATUS_SUCCESS) {
         ChipLogError(NotSpecified, "ERR: updating on/off %x", status);
     }
 
     // Write new level value
     status = Clusters::LevelControl::Attributes::CurrentLevel::Set(
-    STM32_LIGHT_ENDPOINT_ID, LightingMgr().GetLevel());
+    STM32_THERMO_ENDPOINT_ID, LightingMgr().GetLevel());
     if (status != EMBER_ZCL_STATUS_SUCCESS) {
         ChipLogError(NotSpecified, "ERR: updating level %x", status);
     }

@@ -358,6 +358,7 @@ static void APPE_SysEvtReadyProcessing(void) {
 	 */
 	APP_DBG("1- Initialisation of BLE Stack...");
 	APP_BLE_Init_Dyn_1();
+	APP_DBG("Finished doing that...");
 
 	/* Set the address that will be used by OT stack for NVM data management */
 	if(NM_GetOtNVMAddr(&Ot_NVMAddr) == NVM_OK){
