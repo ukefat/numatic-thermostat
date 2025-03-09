@@ -12,11 +12,9 @@ void MatterGeneralDiagnosticsPluginServerInitCallback();
 void MatterGroupKeyManagementPluginServerInitCallback();
 void MatterGroupsPluginServerInitCallback();
 void MatterIdentifyPluginServerInitCallback();
-void MatterLevelControlPluginServerInitCallback();
 void MatterLocalizationConfigurationPluginServerInitCallback();
 void MatterNetworkCommissioningPluginServerInitCallback();
 void MatterOccupancySensingPluginServerInitCallback();
-void MatterOnOffPluginServerInitCallback();
 void MatterOperationalCredentialsPluginServerInitCallback();
 void MatterOtaSoftwareUpdateRequestorPluginServerInitCallback();
 void MatterSoftwareDiagnosticsPluginServerInitCallback();
@@ -25,6 +23,11 @@ void MatterThreadNetworkDiagnosticsPluginServerInitCallback();
 void MatterTimeFormatLocalizationPluginServerInitCallback();
 void MatterUserLabelPluginServerInitCallback();
 void MatterWiFiNetworkDiagnosticsPluginServerInitCallback();
+//ziggy
+void MatterThermostatClusterServerAttributeChangedCallback();
+void MatterThermostatClusterServerShutdownCallback();
+void MatterThermostatClusterServerPreAttributeChangedCallback();
+
 
 #define MATTER_PLUGINS_INIT \
     MatterAccessControlPluginServerInitCallback(); \
@@ -40,11 +43,9 @@ void MatterWiFiNetworkDiagnosticsPluginServerInitCallback();
     MatterGroupKeyManagementPluginServerInitCallback(); \
     MatterGroupsPluginServerInitCallback(); \
     MatterIdentifyPluginServerInitCallback(); \
-    MatterLevelControlPluginServerInitCallback(); \
     MatterLocalizationConfigurationPluginServerInitCallback(); \
     MatterNetworkCommissioningPluginServerInitCallback(); \
     MatterOccupancySensingPluginServerInitCallback(); \
-    MatterOnOffPluginServerInitCallback(); \
     MatterOperationalCredentialsPluginServerInitCallback(); \
     MatterOtaSoftwareUpdateRequestorPluginServerInitCallback(); \
     MatterSoftwareDiagnosticsPluginServerInitCallback(); \
@@ -52,5 +53,8 @@ void MatterWiFiNetworkDiagnosticsPluginServerInitCallback();
     MatterThreadNetworkDiagnosticsPluginServerInitCallback(); \
     MatterTimeFormatLocalizationPluginServerInitCallback(); \
     MatterUserLabelPluginServerInitCallback(); \
-    MatterWiFiNetworkDiagnosticsPluginServerInitCallback();
+    MatterWiFiNetworkDiagnosticsPluginServerInitCallback(); \
+    MatterThermostatClusterServerAttributeChangedCallback(); \
+    MatterThermostatClusterServerShutdownCallback(); \
+    MatterThermostatClusterServerPreAttributeChangedCallback();
 

@@ -52,10 +52,10 @@
  *
  * 0x8005: example lighting app
  */
-#define CHIP_DEVICE_CONFIG_DEVICE_PRODUCT_ID 0x8004
+#define CHIP_DEVICE_CONFIG_DEVICE_PRODUCT_ID 0x8005
 
 /* define Device type based on the application */
-#define CHIP_DEVICE_CONFIG_DEVICE_TYPE 257 // 0x0101  Dimmable Bulb
+#define CHIP_DEVICE_CONFIG_DEVICE_TYPE 0x0301 // 0x0101  Dimmable Bulb
 
 /**
  * CHIP_DEVICE_CONFIG_TEST_SERIAL_NUMBER

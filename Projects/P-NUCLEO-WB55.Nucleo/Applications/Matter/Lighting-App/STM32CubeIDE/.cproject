@@ -166,6 +166,9 @@
 									<listOptionValue builtIn="false" value="${MATTER}/crypto"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Middlewares/mbedtls}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbedtls"/>
+									<listOptionValue builtIn="false" value="${MATTER}/app/clusters/thermostat-server"/>
+									<listOptionValue builtIn="false" value="${MATTER}/app/clusters/thermostat-user-interface-configuration-server"/>
+									<listOptionValue builtIn="false" value="/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Middlewares/Third_Party/connectedhomeip/src/app/clusters/thermostat-server"/>
 								</option>
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.noexceptions.1095775649" name="Disable handling exceptions (-fno-exceptions)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.noexceptions" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.nortti.83302089" name="Disable generation of information about every class with virtual functions (-fno-rtti)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.nortti" useByScannerDiscovery="false" value="true" valueType="boolean"/>

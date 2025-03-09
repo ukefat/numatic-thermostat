@@ -24,6 +24,8 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/errno.h>
+//ziggy
+//#include <sys/types.h>
 
 /* Variables */
 extern int errno;

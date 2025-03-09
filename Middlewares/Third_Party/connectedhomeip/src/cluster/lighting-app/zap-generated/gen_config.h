@@ -20,6 +20,14 @@
 // Prevent multiple inclusion
 #pragma once
 
+//ziggy-scared => including levelcontrol definitions, shouldn't need this for thermostat?!?!
+// User options for server plugin Level Control
+#define EMBER_AF_PLUGIN_LEVEL_CONTROL_MAXIMUM_LEVEL 254
+#define EMBER_AF_PLUGIN_LEVEL_CONTROL_MINIMUM_LEVEL 0
+#define EMBER_AF_PLUGIN_LEVEL_CONTROL_RATE 0
+#define EMBER_AF_COLOR_CONTROL_CLUSTER_SERVER_ENDPOINT_COUNT (1)
+
+
 /**** Cluster endpoint counts ****/
 #define MATTER_DM_IDENTIFY_CLUSTER_CLIENT_ENDPOINT_COUNT (1)
 #define MATTER_DM_IDENTIFY_CLUSTER_SERVER_ENDPOINT_COUNT (1)

@@ -67,21 +67,22 @@
     /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: view */ \
 }
 
+//ziggy
 // Parallel array data (cluster, attribute, *privilege*) for read attribute
 #define GENERATED_ACCESS_READ_ATTRIBUTE__PRIVILEGE { \
-    chip::Access::Privilege::kAdminister, /* Cluster: Access Control, Attribute: ACL, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Access Control, Attribute: ACL, Privilege: administer */ \
     /* Cluster: Basic Information, Attribute: NodeLabel, Privilege: view */ \
     /* Cluster: Basic Information, Attribute: Location, Privilege: view */ \
     /* Cluster: Basic Information, Attribute: LocalConfigDisabled, Privilege: view */ \
     /* Cluster: OTA Software Update Requestor, Attribute: DefaultOTAProviders, Privilege: view */ \
     /* Cluster: General Commissioning, Attribute: Breadcrumb, Privilege: view */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: MaxNetworks, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: Networks, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: MaxNetworks, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: Networks, Privilege: administer */ \
     /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: view */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: LastNetworkingStatus, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: LastNetworkID, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: LastConnectErrorValue, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Attribute: NOCs, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: LastNetworkingStatus, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: LastNetworkID, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: LastConnectErrorValue, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Attribute: NOCs, Privilege: administer */ \
     /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: view */ \
     /* Cluster: User Label, Attribute: LabelList, Privilege: view */ \
     /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: view */ \
@@ -145,29 +146,29 @@
 
 // Parallel array data (cluster, attribute, *privilege*) for write attribute
 #define GENERATED_ACCESS_WRITE_ATTRIBUTE__PRIVILEGE { \
-    chip::Access::Privilege::kManage, /* Cluster: Binding, Attribute: Binding, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Access Control, Attribute: ACL, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: Basic Information, Attribute: NodeLabel, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Basic Information, Attribute: Location, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: Basic Information, Attribute: LocalConfigDisabled, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: OTA Software Update Requestor, Attribute: DefaultOTAProviders, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: Localization Configuration, Attribute: ActiveLocale, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Time Format Localization, Attribute: HourFormat, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Unit Localization, Attribute: TemperatureUnit, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: General Commissioning, Attribute: Breadcrumb, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: User Label, Attribute: LabelList, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: SystemMode, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Attribute: Presets, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Binding, Attribute: Binding, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Access Control, Attribute: ACL, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Basic Information, Attribute: NodeLabel, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Basic Information, Attribute: Location, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Basic Information, Attribute: LocalConfigDisabled, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: OTA Software Update Requestor, Attribute: DefaultOTAProviders, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Localization Configuration, Attribute: ActiveLocale, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Time Format Localization, Attribute: HourFormat, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Unit Localization, Attribute: TemperatureUnit, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: General Commissioning, Attribute: Breadcrumb, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: User Label, Attribute: LabelList, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: SystemMode, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Attribute: Presets, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: manage */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -248,39 +249,39 @@
 
 // Parallel array data (cluster, command, *privilege*) for invoke command
 #define GENERATED_ACCESS_INVOKE_COMMAND__PRIVILEGE { \
-    chip::Access::Privilege::kManage, /* Cluster: Identify, Command: Identify, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Identify, Command: TriggerEffect, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Groups, Command: AddGroup, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Groups, Command: RemoveGroup, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Groups, Command: RemoveAllGroups, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Groups, Command: AddGroupIfIdentifying, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: General Commissioning, Command: ArmFailSafe, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: General Commissioning, Command: SetRegulatoryConfig, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: General Commissioning, Command: CommissioningComplete, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: ScanNetworks, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: AddOrUpdateWiFiNetwork, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: AddOrUpdateThreadNetwork, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: RemoveNetwork, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: ConnectNetwork, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Network Commissioning, Command: ReorderNetwork, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: General Diagnostics, Command: TestEventTrigger, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thread Network Diagnostics, Command: ResetCounts, Privilege: manage */ \
-    chip::Access::Privilege::kManage, /* Cluster: Ethernet Network Diagnostics, Command: ResetCounts, Privilege: manage */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Administrator Commissioning, Command: OpenCommissioningWindow, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Administrator Commissioning, Command: RevokeCommissioning, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: AttestationRequest, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: CertificateChainRequest, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: CSRRequest, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: AddNOC, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: UpdateNOC, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: UpdateFabricLabel, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: RemoveFabric, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Operational Credentials, Command: AddTrustedRootCertificate, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Group Key Management, Command: KeySetWrite, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Group Key Management, Command: KeySetRead, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Group Key Management, Command: KeySetRemove, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Group Key Management, Command: KeySetReadAllIndices, Privilege: administer */ \
-    chip::Access::Privilege::kManage, /* Cluster: Thermostat, Command: AtomicRequest, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Identify, Command: Identify, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Identify, Command: TriggerEffect, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Groups, Command: AddGroup, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Groups, Command: RemoveGroup, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Groups, Command: RemoveAllGroups, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Groups, Command: AddGroupIfIdentifying, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: General Commissioning, Command: ArmFailSafe, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: General Commissioning, Command: SetRegulatoryConfig, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: General Commissioning, Command: CommissioningComplete, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: ScanNetworks, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: AddOrUpdateWiFiNetwork, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: AddOrUpdateThreadNetwork, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: RemoveNetwork, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: ConnectNetwork, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Network Commissioning, Command: ReorderNetwork, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: General Diagnostics, Command: TestEventTrigger, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thread Network Diagnostics, Command: ResetCounts, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Ethernet Network Diagnostics, Command: ResetCounts, Privilege: manage */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Administrator Commissioning, Command: OpenCommissioningWindow, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Administrator Commissioning, Command: RevokeCommissioning, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: AttestationRequest, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: CertificateChainRequest, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: CSRRequest, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: AddNOC, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: UpdateNOC, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: UpdateFabricLabel, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: RemoveFabric, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Operational Credentials, Command: AddTrustedRootCertificate, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Group Key Management, Command: KeySetWrite, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Group Key Management, Command: KeySetRead, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Group Key Management, Command: KeySetRemove, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Group Key Management, Command: KeySetReadAllIndices, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kManage), /* Cluster: Thermostat, Command: AtomicRequest, Privilege: manage */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -301,9 +302,9 @@
 
 // Parallel array data (cluster, event, *privilege*) for read event
 #define GENERATED_ACCESS_READ_EVENT__PRIVILEGE { \
-    chip::Access::Privilege::kAdminister, /* Cluster: Access Control, Event: AccessControlEntryChanged, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Access Control, Event: AccessControlExtensionChanged, Privilege: administer */ \
-    chip::Access::Privilege::kAdminister, /* Cluster: Access Control, Event: FabricRestrictionReviewUpdate, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Access Control, Event: AccessControlEntryChanged, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Access Control, Event: AccessControlExtensionChanged, Privilege: administer */ \
+    static_cast<uint8_t>(chip::Access::Privilege::kAdminister), /* Cluster: Access Control, Event: FabricRestrictionReviewUpdate, Privilege: administer */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////
