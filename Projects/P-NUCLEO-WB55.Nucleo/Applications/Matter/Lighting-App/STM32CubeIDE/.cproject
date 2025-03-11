@@ -167,6 +167,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Middlewares/mbedtls}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbedtls"/>
 									<listOptionValue builtIn="false" value="${MATTER}/app/clusters/thermostat-server"/>
+									<listOptionValue builtIn="false" value="&quot;${MATTER}/app/clusters/scenes&quot;"/>
 									<listOptionValue builtIn="false" value="${MATTER}/app/clusters/thermostat-user-interface-configuration-server"/>
 									<listOptionValue builtIn="false" value="/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Middlewares/Third_Party/connectedhomeip/src/app/clusters/thermostat-server"/>
 								</option>
