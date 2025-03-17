@@ -156,6 +156,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/nlio/include"/>
 									<listOptionValue builtIn="false" value="${MATTER}/cluster/lighting-app"/>
 									<listOptionValue builtIn="false" value="${MATTER}/inet"/>
+									<listOptionValue builtIn="false" value="${MATTER}/app"/>
 									<listOptionValue builtIn="false" value="${MATTER}/platform/stm32"/>
 									<listOptionValue builtIn="false" value="${MATTER}/platform"/>
 									<listOptionValue builtIn="false" value="${MATTER}/platform/OpenThread"/>

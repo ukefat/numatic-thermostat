@@ -818,6 +818,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/LightingManager.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/Core/src/SensorManager.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/SensorManager.cpp</location>
+		</link>
+		<link>
+			<name>Application/User/Core/src/TemperatureManager.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/TemperatureManager.cpp</location>
+		</link>
+		<link>
 			<name>Application/User/Core/src/ZclCallbacks.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/ZclCallbacks.cpp</locationURI>

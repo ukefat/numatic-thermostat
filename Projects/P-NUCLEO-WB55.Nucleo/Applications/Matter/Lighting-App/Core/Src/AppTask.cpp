@@ -30,9 +30,12 @@
 #endif
 
 /*Matter includes*/
-#include <app/server/OnboardingCodesUtil.h>
+#include <app-common/zap-generated/callback.h>
+#include <app-common/zap-generated/cluster-objects.h>
+#include <app-common/zap-generated/ids/Attributes.h>
 #include <app-common/zap-generated/attribute-type.h>
 #include <app-common/zap-generated/attributes/Accessors.h>
+#include <app/server/OnboardingCodesUtil.h>
 #include <app/server/Dnssd.h>
 #include <app/server/Server.h>
 #include <app/util/attribute-storage.h>
@@ -107,6 +110,8 @@ CHIP_ERROR AppTask::Init() {
     CHIP_ERROR err = CHIP_NO_ERROR;
     ChipLogProgress(NotSpecified, "Current Software Version: %s",
             CHIP_DEVICE_CONFIG_DEVICE_SOFTWARE_VERSION_STRING);
+    APP_DBG("ziggy: zigzag");
+
 
     // Setup button handler
     APP_ENTRY_PBSetReceiveCallback(ButtonEventHandler);
@@ -132,13 +137,18 @@ CHIP_ERROR AppTask::Init() {
 
     PlatformMgr().AddEventHandler(MatterEventHandler, 0);
 
-    err = LightingMgr().Init();
-    if (err != CHIP_NO_ERROR) {
-        APP_DBG("LightingMgr().Init() failed");
+    err = SensorMgr().Init();
+    if (err != CHIP_NO_ERROR)
+    {
+        APP_DBG("SensorMgr::Init() failed");
         return err;
     }
-    LightingMgr().SetCallbacks(ActionInitiated, ActionCompleted);
-
+    err = TempMgr().Init();
+    if (err != CHIP_NO_ERROR)
+    {
+        APP_DBG("TempMgr::Init() failed");
+        return err;
+    }
 #if CHIP_DEVICE_CONFIG_ENABLE_EXTENDED_DISCOVERY
 	chip::app::DnssdServer::Instance().SetExtendedDiscoveryTimeoutSecs(extDiscTimeoutSecs);
 #endif
@@ -160,6 +170,7 @@ CHIP_ERROR AppTask::Init() {
     chip::Server::GetInstance().Init(initParams);
 
     ConfigurationMgr().LogDeviceConfig();
+    APP_DBG("ziggy: trying to zig");
     // Open commissioning after boot if no fabric was available
     if (chip::Server::GetInstance().GetFabricTable().FabricCount() == 0) {
 
@@ -169,6 +180,7 @@ CHIP_ERROR AppTask::Init() {
         chip::Server::GetInstance().GetCommissioningWindowManager().OpenBasicCommissioningWindow();
         APP_DBG("BLE advertising started. Waiting for Pairing.");
     } else {  // try to attach to the thread network
+        APP_DBG("ziggy: found a fabric apparently");
         uint8_t datasetBytes[Thread::kSizeOperationalDataset];
         size_t datasetLength = 0;
         APP_BLE_Init_Dyn_3();
@@ -239,31 +251,6 @@ void AppTask::AppTaskMain(void *pvParameter) {
 
 }
 
-void AppTask::LightingActionEventHandler(AppEvent *aEvent) {
-    LightingManager::Action_t action;
-
-    if (aEvent->Type == AppEvent::kEventType_Button) {
-        // Toggle light
-        if (LightingMgr().IsTurnedOn()) {
-            action = LightingManager::OFF_ACTION;
-        } else {
-            action = LightingManager::ON_ACTION;
-        }
-
-        sAppTask.mSyncClusterToButtonAction = true;
-        LightingMgr().InitiateAction(action, 0, 0, 0);
-    }
-    if (aEvent->Type == AppEvent::kEventType_Level && aEvent->ButtonEvent.Action != 0) {
-        // Toggle Dimming of light between 2 fixed levels
-        uint8_t val = 0x0;
-        val = LightingMgr().GetLevel() == 0x7f ? 0x1 : 0x7f;
-        action = LightingManager::LEVEL_ACTION;
-
-        sAppTask.mSyncClusterToButtonAction = true;
-        LightingMgr().InitiateAction(action, 0, 1, &val);
-    }
-}
-
 void AppTask::ButtonEventHandler(Push_Button_st *Button) {
 
     AppEvent button_event = { };
@@ -314,33 +301,6 @@ void AppTask::FunctionHandler(AppEvent *aEvent) {
     }
 }
 
-void AppTask::ActionInitiated(LightingManager::Action_t aAction) {
-    // Placeholder for light action
-    if (aAction == LightingManager::ON_ACTION) {
-        APP_DBG("Light goes on");
-        APP_ENTRY_LedBlink(LED3, 1);
-    } else if (aAction == LightingManager::OFF_ACTION) {
-        APP_DBG("Light goes off ");
-        APP_ENTRY_LedBlink(LED3, 0);
-    } else if (aAction == LightingManager::LEVEL_ACTION) {
-        if (LightingMgr().IsTurnedOn()) {
-            APP_DBG("Update level control %d", LightingMgr().GetLevel());
-        }
-    }
-}
-
-void AppTask::ActionCompleted(LightingManager::Action_t aAction) {
-    // Placeholder for light action completed
-    if (aAction == LightingManager::ON_ACTION) {
-        APP_DBG("Light action on completed");
-    } else if (aAction == LightingManager::OFF_ACTION) {
-        APP_DBG("Light action off completed");
-    }
-    if (sAppTask.mSyncClusterToButtonAction) {
-        sAppTask.UpdateClusterState();
-        sAppTask.mSyncClusterToButtonAction = false;
-    }
-}
 
 void AppTask::PostEvent(const AppEvent *aEvent) {
     if (sAppEventQueue != NULL) {
@@ -357,26 +317,6 @@ void AppTask::DispatchEvent(AppEvent *aEvent) {
         aEvent->Handler(aEvent);
     } else {
         ChipLogError(NotSpecified, "Event received with no handler. Dropping event.");
-    }
-}
-
-/**
- * Update cluster status after application level changes
- */
-void AppTask::UpdateClusterState(void) {
-    ChipLogProgress(NotSpecified, "UpdateClusterState");
-    // Write the new on/off value
-    EmberAfStatus status = Clusters::OnOff::Attributes::OnOff::Set(
-    STM32_THERMO_ENDPOINT_ID, LightingMgr().IsTurnedOn());
-    if (status != EMBER_ZCL_STATUS_SUCCESS) {
-        ChipLogError(NotSpecified, "ERR: updating on/off %x", status);
-    }
-
-    // Write new level value
-    status = Clusters::LevelControl::Attributes::CurrentLevel::Set(
-    STM32_THERMO_ENDPOINT_ID, LightingMgr().GetLevel());
-    if (status != EMBER_ZCL_STATUS_SUCCESS) {
-        ChipLogError(NotSpecified, "ERR: updating level %x", status);
     }
 }
 
@@ -473,4 +413,5 @@ void AppTask::MatterEventHandler(const ChipDeviceEvent *event, intptr_t) {
         break;
     }
 }
+
 

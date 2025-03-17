@@ -21,10 +21,15 @@
  * Includes
  *********************************************************/
 
+#include "app_common.h"
 #include "TemperatureManager.h"
-#include "AppConfig.h"
+//#include "AppConfig.h"
 #include "AppEvent.h"
 #include "AppTask.h"
+#include "dbg_trace.h"
+
+#include "stm_logging.h"
+
 
 #include <lib/support/logging/CHIPLogging.h>
 /**********************************************************
@@ -46,15 +51,16 @@ TemperatureManager TemperatureManager::sTempMgr;
 
 CHIP_ERROR TemperatureManager::Init()
 {
+    APP_DBG("Is anything working ziggy?");
     app::DataModel::Nullable<int16_t> temp;
     int16_t heatingSetpoint, coolingSetpoint;
-    SystemModeEnum systemMode;
+    ThermostatSystemMode systemMode;
 
     PlatformMgr().LockChipStack();
     ThermAttr::LocalTemperature::Get(kThermostatEndpoint, temp);
     ThermAttr::OccupiedCoolingSetpoint::Get(kThermostatEndpoint, &coolingSetpoint);
     ThermAttr::OccupiedHeatingSetpoint::Get(kThermostatEndpoint, &heatingSetpoint);
-    ThermAttr::SystemMode::Get(kThermostatEndpoint, &systemMode);
+    ThermAttr::SystemMode::Get(kThermostatEndpoint, (uint8_t*) &systemMode);
     PlatformMgr().UnlockChipStack();
 
     mCurrentTempCelsius     = ConvertToPrintableTemp((temp.IsNull()) ? static_cast<int16_t>(0.0) : temp.Value());
@@ -63,31 +69,31 @@ CHIP_ERROR TemperatureManager::Init()
 
     switch (systemMode)
     {
-    case SystemModeEnum::kOff:
+    case ThermostatSystemMode::kOff:
         mThermMode = 0;
         break;
-    case SystemModeEnum::kAuto:
+    case ThermostatSystemMode::kAuto:
         mThermMode = 1;
         break;
-    case SystemModeEnum::kCool:
+    case ThermostatSystemMode::kCool:
         mThermMode = 3;
         break;
-    case SystemModeEnum::kHeat:
+    case ThermostatSystemMode::kHeat:
         mThermMode = 4;
         break;
-    case SystemModeEnum::kEmergencyHeat:
+    case ThermostatSystemMode::kEmergencyHeat:
         mThermMode = 5;
         break;
-    case SystemModeEnum::kPrecooling:
+    case ThermostatSystemMode::kPrecooling:
         mThermMode = 6;
         break;
-    case SystemModeEnum::kFanOnly:
+    case ThermostatSystemMode::kFanOnly:
         mThermMode = 7;
         break;
-    case SystemModeEnum::kDry:
+    case ThermostatSystemMode::kDry:
         mThermMode = 8;
         break;
-    case SystemModeEnum::kSleep:
+    case ThermostatSystemMode::kSleep:
         mThermMode = 9;
         break;
     default:
@@ -95,7 +101,7 @@ CHIP_ERROR TemperatureManager::Init()
         break; // unknown value;
     }
 
-    AppTask::GetAppTask().UpdateThermoStatUI();
+    //AppTask::GetAppTask().UpdateThermoStatUI();
 
     return CHIP_NO_ERROR;
 }
@@ -124,27 +130,27 @@ void TemperatureManager::AttributeChangeHandler(EndpointId endpointId, Attribute
     {
     case ThermAttr::LocalTemperature::Id: {
         int8_t Temp = ConvertToPrintableTemp(*((int16_t *) value));
-        SILABS_LOG("Local temp %d", Temp);
+        APP_DBG("Local temp %d", Temp);
         mCurrentTempCelsius = Temp;
     }
     break;
 
     case ThermAttr::OccupiedCoolingSetpoint::Id: {
         int8_t coolingTemp = ConvertToPrintableTemp(*((int16_t *) value));
-        SILABS_LOG("CoolingSetpoint %d", coolingTemp);
+        APP_DBG("CoolingSetpoint %d", coolingTemp);
         mCoolingCelsiusSetPoint = coolingTemp;
     }
     break;
 
     case ThermAttr::OccupiedHeatingSetpoint::Id: {
         int8_t heatingTemp = ConvertToPrintableTemp(*((int16_t *) value));
-        SILABS_LOG("HeatingSetpoint %d", heatingTemp);
+        APP_DBG("HeatingSetpoint %d", heatingTemp);
         mHeatingCelsiusSetPoint = heatingTemp;
     }
     break;
 
     case ThermAttr::SystemMode::Id: {
-        SILABS_LOG("SystemMode %d", static_cast<uint8_t>(*value));
+        APP_DBG("SystemMode %d", static_cast<uint8_t>(*value));
         uint8_t mode = static_cast<uint8_t>(*value);
         if (mThermMode != mode)
         {
@@ -154,13 +160,13 @@ void TemperatureManager::AttributeChangeHandler(EndpointId endpointId, Attribute
     break;
 
     default: {
-        SILABS_LOG("Unhandled thermostat attribute %x", attributeId);
+        APP_DBG("Unhandled thermostat attribute %x", attributeId);
         return;
     }
     break;
     }
 
-    AppTask::GetAppTask().UpdateThermoStatUI();
+    //AppTask::GetAppTask().UpdateThermoStatUI();
 }
 
 uint8_t TemperatureManager::GetMode()
