@@ -47,6 +47,7 @@
 #include <platform/ThreadStackManager.h>
 #endif
 
+extern TIM_HandleTypeDef htim2;
 using namespace ::chip;
 using namespace ::chip::app;
 using namespace chip::TLV;

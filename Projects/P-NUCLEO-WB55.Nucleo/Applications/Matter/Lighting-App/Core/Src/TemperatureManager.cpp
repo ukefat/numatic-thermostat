@@ -58,6 +58,7 @@ CHIP_ERROR TemperatureManager::Init()
     PlatformMgr().UnlockChipStack();
 
     mCurrentTempCelsius     = ConvertToPrintableTemp((temp.IsNull()) ? static_cast<int16_t>(0.0) : temp.Value());
+    //TODO: ziggy-scared, why are these flipped
     mHeatingCelsiusSetPoint = ConvertToPrintableTemp(coolingSetpoint);
     mCoolingCelsiusSetPoint = ConvertToPrintableTemp(heatingSetpoint);
 

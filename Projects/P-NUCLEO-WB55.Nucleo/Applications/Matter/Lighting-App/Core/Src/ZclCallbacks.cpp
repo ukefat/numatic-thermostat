@@ -20,7 +20,8 @@
 
 
 #include "AppTask.h"
-#include "LightingManager.h"
+#include "SensorManager.h"
+#include "TemperatureManager.h"
 
 #include <app-common/zap-generated/ids/Attributes.h>
 #include <app-common/zap-generated/ids/Clusters.h>
@@ -35,24 +36,26 @@ void MatterPostAttributeChangeCallback(const chip::app::ConcreteAttributePath & 
 {
     ClusterId clusterId     = attributePath.mClusterId;
     AttributeId attributeId = attributePath.mAttributeId;
+    ChipLogProgress(Zcl, "Cluster callback: " ChipLogFormatMEI, ChipLogValueMEI(clusterId));
 
-    if (clusterId == OnOff::Id && attributeId == OnOff::Attributes::OnOff::Id)
+    //APP_DBG("Got to ZCL thingy");
+
+    if (clusterId == Identify::Id)
     {
-        ChipLogProgress(Zcl, "Cluster OnOff: attribute OnOff set to %" PRIu8, *value);
-        LightingMgr().InitiateAction(*value ? LightingManager::ON_ACTION : LightingManager::OFF_ACTION,0,
-                                      size, value);
+        ChipLogProgress(Zcl, "Identify attribute ID: " ChipLogFormatMEI " Type: %u Value: %u, length %u",
+                        ChipLogValueMEI(attributeId), type, *value, size);
     }
-    else if (clusterId == LevelControl::Id && attributeId == LevelControl::Attributes::CurrentLevel::Id)
+    else if (clusterId == Thermostat::Id)
     {
-        ChipLogProgress(Zcl, "Cluster LevelControl: attribute CurrentLevel set to %" PRIu8, *value);
-        LightingMgr().InitiateAction(LightingManager::LEVEL_ACTION,0, size, value);
+        //APP_DBG("RECEIVING THERMOSTAT CHANGES GLORP");
+        TempMgr().AttributeChangeHandler(attributePath.mEndpointId, attributeId, value, size);
     }
 }
 
 
 
-void emberAfOnOffClusterInitCallback(EndpointId endpoint)
-{
-}
+//void emberAfOnOffClusterInitCallback(EndpointId endpoint)
+//{
+//}
 
 

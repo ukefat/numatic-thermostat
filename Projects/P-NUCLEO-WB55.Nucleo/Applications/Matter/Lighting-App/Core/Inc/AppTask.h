@@ -24,7 +24,12 @@
 
 #include "AppEvent.h"
 #include "app_entry.h"
+<<<<<<< Updated upstream
 #include "LightingManager.h"
+=======
+#include "TemperatureManager.h"
+#include "SensorManager.h"
+>>>>>>> Stashed changes
 
 
 #include <platform/CHIPDeviceLayer.h>

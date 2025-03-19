@@ -52,11 +52,19 @@ extern RNG_HandleTypeDef hrng;
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
+//ziggy
+#ifdef __cplusplus
+extern "C" {
+#endif
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-
+#ifdef __cplusplus
+}
+#endif
 
 /* USER CODE BEGIN EFP */
 

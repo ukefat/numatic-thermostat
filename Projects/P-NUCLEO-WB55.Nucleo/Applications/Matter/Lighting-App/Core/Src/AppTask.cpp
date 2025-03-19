@@ -47,6 +47,8 @@
 #include <platform/ThreadStackManager.h>
 #endif
 
+extern TIM_HandleTypeDef htim2;
+
 using namespace ::chip;
 using namespace ::chip::app;
 using namespace chip::TLV;
@@ -223,6 +225,8 @@ void AppTask::AppTaskMain(void *pvParameter) {
 
     APP_DBG("App Task started");
     while (true) {
+
+        //APP_DBG("Counter: %d", __HAL_TIM_GET_COUNTER(&htim2));
 
         BaseType_t eventReceived = xQueueReceive(sAppEventQueue, &event, pdMS_TO_TICKS(10));
         while (eventReceived == pdTRUE) {
