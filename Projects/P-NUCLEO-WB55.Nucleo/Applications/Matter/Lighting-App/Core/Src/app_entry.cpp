@@ -31,6 +31,7 @@
 #include "stm32_lpm.h"
 #include "app_ble.h"
 #include "shci.h"
+//#include "dbg_trace.h"
 
 #include "AppTask.h"
 /* Private includes -----------------------------------------------------------*/
@@ -174,7 +175,7 @@ void APP_ENTRY_LedBlink(Led_TypeDef Led, uint8_t LedStatus) {
 	}
 }
 static void displayConcurrentMode() {
-	APP_DBG("Matter Over Thread Lighting-App starting...");
+	APP_DBG("Matter Over Thread Thermostat-App starting...");
 }
 
 /*************************************************************
@@ -372,7 +373,7 @@ static void APPE_SysEvtReadyProcessing(void) {
 	APP_BLE_Init_Dyn_2();
 
 	APP_DBG("Start init matter");
-	GetAppTask().StartAppTask();
+	AppTask::GetAppTask().StartAppTask();
 
 #if ( CFG_LPM_SUPPORTED == 1)
   /* Thread stack is initialized, low power mode can be enabled */

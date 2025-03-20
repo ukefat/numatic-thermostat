@@ -843,6 +843,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/LightingManager.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/Core/src/SensorManager.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/SensorManager.cpp</location>
+		</link>
+		<link>
+			<name>Application/User/Core/src/TemperatureManager.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/TemperatureManager.cpp</location>
+		</link>
+		<link>
 			<name>Application/User/Core/src/ZclCallbacks.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/ZclCallbacks.cpp</locationURI>
@@ -5426,41 +5436,6 @@
 			<name>Middlewares/connectedhomeip/src/app-common/zap-generated/ids/Events.h</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/app-common/zap-generated/ids/Events.h</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/CHIPClientCallbacks.h</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/CHIPClientCallbacks.h</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/CHIPClusters.h</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/CHIPClusters.h</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/IMClusterCommandHandler.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/IMClusterCommandHandler.cpp</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/access.h</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/access.h</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/callback-stub.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/callback-stub.cpp</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/endpoint_config.h</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/endpoint_config.h</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/connectedhomeip/src/cluster/lighting-app/zap-generated/gen_config.h</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/connectedhomeip/src/cluster/lighting-app/zap-generated/gen_config.h</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/connectedhomeip/src/include/platform/internal/BLEManager.h</name>

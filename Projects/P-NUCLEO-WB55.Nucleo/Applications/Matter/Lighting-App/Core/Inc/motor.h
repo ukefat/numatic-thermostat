@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#include "stm32wlxx_hal.h"
+#include "stm32wbxx_hal.h"
 
 /*
  * MOTOR STRUCT

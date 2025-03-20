@@ -140,7 +140,7 @@ int main(void) {
 	freertos_mbedtls_init();
 
 	APPE_Init();
-    GetAppTask().InitMatter();
+	AppTask::GetAppTask().InitMatter();
 
 	osKernelStart();
 	while (1) {

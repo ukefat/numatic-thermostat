@@ -19,7 +19,7 @@
 #pragma once
 
 #include "AppEvent.h"
-// #include <app-common/zap-generated/attributes/Accessors.h>
+#include <app-common/zap-generated/attributes/Accessors.h>
 #include <stdbool.h>
 #include <stdint.h>
 

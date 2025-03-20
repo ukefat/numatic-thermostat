@@ -58,17 +58,17 @@ AFSHT41 SensorManager::tempSensor = {
 		.hi2c = &hi2c1
 };
 
-Motor_HandleTypeDef SensorManager::motor = {
-//	    .htim_encoder=    /* encoder timer handle */
-//	    .htim_pwm=     	/* PWM output timer handle */
-	    .pwm_channel=TIM_CHANNEL_1,
-	    .in1_port=
-	    .in1_pin=
-	    .in2_port=
-		.in2_pin=
-		.stby_port=
-		.stby_pin=
-};
+//Motor_HandleTypeDef SensorManager::motor = {
+////	    .htim_encoder=    /* encoder timer handle */
+////	    .htim_pwm=     	/* PWM output timer handle */
+//	    .pwm_channel=TIM_CHANNEL_1,
+//	    .in1_port=
+//	    .in1_pin=
+//	    .in2_port=
+//		.in2_pin=
+//		.stby_port=
+//		.stby_pin=
+//};
 
 CHIP_ERROR SensorManager::Init()
 {
@@ -150,21 +150,6 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     if ((temperature >= (lastTemperature + kMinTemperatureDelta)) || temperature <= (lastTemperature - kMinTemperatureDelta))
     {
 
-        //MarkAttributeDirty reportState = MarkAttributeDirty::kNo;
-        if ((temperature >= (lastTemperature + kMinTemperatureDelta)) || temperature <= (lastTemperature - kMinTemperatureDelta))
-        {
-            //reportState = MarkAttributeDirty::kIfChanged;
-        }
-
-        lastTemperature = temperature;
-        PlatformMgr().LockChipStack();
-        // The SensorMagager shouldn't be aware of the Endpoint ID TODO Fix this.
-        // TODO Per Spec we should also apply the Offset stored in the same cluster before saving the temp
-        app::Clusters::Thermostat::Attributes::LocalTemperature::Set(kThermostatEndpoint, temperature);//, reportState);
-        PlatformMgr().UnlockChipStack();
-    }
-
-        //reportState = MarkAttributeDirty::kIfChanged;
     }
 
     lastTemperature = temperature;

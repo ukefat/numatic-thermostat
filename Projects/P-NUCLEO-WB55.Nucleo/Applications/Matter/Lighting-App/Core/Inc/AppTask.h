@@ -24,18 +24,23 @@
 
 #include "AppEvent.h"
 #include "app_entry.h"
-<<<<<<< Updated upstream
 #include "LightingManager.h"
-=======
 #include "TemperatureManager.h"
 #include "SensorManager.h"
->>>>>>> Stashed changes
 
 
 #include <platform/CHIPDeviceLayer.h>
 #include <platform/stm32/FactoryDataProvider.h>
 
-#define APP_NAME "Lighting-app"
+#define APP_NAME "Thermostat-app"
+
+#define APP_ERROR_EVENT_QUEUE_FAILED CHIP_APPLICATION_ERROR(0x01)
+#define APP_ERROR_CREATE_TASK_FAILED CHIP_APPLICATION_ERROR(0x02)
+#define APP_ERROR_UNHANDLED_EVENT CHIP_APPLICATION_ERROR(0x03)
+#define APP_ERROR_CREATE_TIMER_FAILED CHIP_APPLICATION_ERROR(0x04)
+#define APP_ERROR_START_TIMER_FAILED CHIP_APPLICATION_ERROR(0x05)
+#define APP_ERROR_STOP_TIMER_FAILED CHIP_APPLICATION_ERROR(0x06)
+
 
 class AppTask
 {
@@ -43,8 +48,10 @@ class AppTask
 public:
 	    CHIP_ERROR StartAppTask();
 	    CHIP_ERROR Init();
+
+	    static AppTask & GetAppTask() { return sAppTask; }
+
 	    static void AppTaskMain(void * pvParameter);
-	    void PostLightActionRequest(int32_t aActor, LightingManager::Action_t aAction);
 	    void PostEvent(const AppEvent * event);
 	    void UpdateClusterState();
 	    CHIP_ERROR InitMatter(void);
@@ -54,18 +61,16 @@ protected:
 	    TaskHandle_t mAppTask      = NULL;
 
 private:
-    friend AppTask & GetAppTask(void);
-       static void ActionInitiated(LightingManager::Action_t aAction);
-       static void ActionCompleted(LightingManager::Action_t aAction);
+    //friend AppTask & GetAppTask(void);
        void CancelTimer(void);
        void DispatchEvent(AppEvent * event);
        static void FunctionHandler(AppEvent * aEvent);
-       static void LightingActionEventHandler(AppEvent * aEvent);
        static void TimerEventHandler(TimerHandle_t xTimer);
        static void DelayNvmHandler(TimerHandle_t xTimer);
        static void MatterEventHandler(const chip::DeviceLayer::ChipDeviceEvent * event, intptr_t arg);
        static void UpdateLEDs(void);
        static void UpdateNvmEventHandler(AppEvent * aEvent);
+       static void ThermostatActionEventHandler(AppEvent * aEvent);
 
     enum Function_t
     {
@@ -86,10 +91,10 @@ private:
     static AppTask sAppTask;
 };
 
-inline AppTask & GetAppTask(void)
-{
-    return AppTask::sAppTask;
-}
+//inline AppTask & GetAppTask(void)
+//{
+//    return AppTask::sAppTask;
+//}
 
 
 #endif // APP_TASK_H
