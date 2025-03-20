@@ -58,17 +58,17 @@ AFSHT41 SensorManager::tempSensor = {
 		.hi2c = &hi2c1
 };
 
-//Motor_HandleTypeDef SensorManager::motor = {
-////	    .htim_encoder=    /* encoder timer handle */
-////	    .htim_pwm=     	/* PWM output timer handle */
-//	    .pwm_channel=TIM_CHANNEL_1,
-//	    .in1_port=
-//	    .in1_pin=
-//	    .in2_port=
-//		.in2_pin=
-//		.stby_port=
-//		.stby_pin=
-//};
+Motor_HandleTypeDef SensorManager::motor = {
+//	    .htim_encoder=    /* encoder timer handle */
+//	    .htim_pwm=     	/* PWM output timer handle */
+	    .pwm_channel=TIM_CHANNEL_1,
+	    .in1_port= GPIOC,
+	    .in1_pin= GPIO_PIN_12,
+	    .in2_port= GPIOC,
+		.in2_pin= GPIO_PIN_13,
+		.stby_port= GPIOC,
+		.stby_pin= GPIO_PIN_10
+};
 
 CHIP_ERROR SensorManager::Init()
 {
@@ -76,6 +76,8 @@ CHIP_ERROR SensorManager::Init()
     mSensorTimer = osTimerNew(SensorTimerEventHandler, osTimerPeriodic, nullptr, nullptr);
 
     AFSHT41_Init(&tempSensor);
+
+    Motor_Init(&motor, &htim2, &htim1);
 
     if (mSensorTimer == NULL)
     {
@@ -154,9 +156,16 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 
     lastTemperature = temperature;
     PlatformMgr().LockChipStack();
+
     // The SensorMagager shouldn't be aware of the Endpoint ID TODO Fix this.
     // TODO Per Spec we should also apply the Offset stored in the same cluster before saving the temp
     app::Clusters::Thermostat::Attributes::LocalTemperature::Set(kThermostatEndpoint, temperature);//, reportState);
     PlatformMgr().UnlockChipStack();
+    int16_t target_position = 9000;
+    int16_t count = 0;
+    while(count != target_position) {
+    	count = __HAL_TIM_GET_COUNTER(&htim2);
+    	UpdateMotorSignal(&motor, target_position);
+    }
 }
 

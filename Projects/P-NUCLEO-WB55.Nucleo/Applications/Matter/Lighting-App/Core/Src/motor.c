@@ -58,11 +58,11 @@ void UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
 
     // **Calculate PWM Output**
     output = (Kp * errorMagnitude) + (Kd * derivative);
-    output = (output / 1000.0) * 49; // Scale for PWM
+    output = (output / 10) * 1600; // Scale for PWM
 
     // **Clamp PWM Output**
-    if (output > 49) output = 49;
-    if (output < 10) output = 10;
+    if (output > 1600) output = 1600;
+    if (output < 320) output = 320;
 
     // **Motor Direction Control**
     if (error < 0 && errorMagnitude > 5) {
