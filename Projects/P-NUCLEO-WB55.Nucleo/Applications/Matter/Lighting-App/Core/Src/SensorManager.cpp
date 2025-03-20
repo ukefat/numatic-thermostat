@@ -53,10 +53,29 @@ constexpr uint16_t kSimulatedReadingFrequency = (60000 / kSensorTImerPeriodMs); 
 static int16_t mSimulatedTemp[]               = { 2300, 2400, 2800, 2550, 2200, 2125, 2100, 2600, 1800, 2700 };
 #endif // !(defined(SL_MATTER_USE_SI70XX_SENSOR) && (SL_MATTER_USE_SI70XX_SENSOR))
 
+
+AFSHT41 SensorManager::tempSensor = {
+		.hi2c = &hi2c1
+};
+
+//Motor_HandleTypeDef SensorManager::motor = {
+////	    .htim_encoder=    /* encoder timer handle */
+////	    .htim_pwm=     	/* PWM output timer handle */
+//	    .pwm_channel=TIM_CHANNEL_1,
+//	    .in1_port=
+//	    .in1_pin=
+//	    .in2_port=
+//		.in2_pin=
+//		.stby_port=
+//		.stby_pin=
+//};
+
 CHIP_ERROR SensorManager::Init()
 {
     // Create cmsisos sw timer for temp sensor timer.
     mSensorTimer = osTimerNew(SensorTimerEventHandler, osTimerPeriodic, nullptr, nullptr);
+
+    AFSHT41_Init(&tempSensor);
 
     if (mSensorTimer == NULL)
     {
@@ -64,13 +83,13 @@ CHIP_ERROR SensorManager::Init()
         return APP_ERROR_CREATE_TIMER_FAILED;
     }
 
-#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
-    if (SL_STATUS_OK != Si70xxSensor::Init())
-    {
-    	APP_DBG("Failed to Init Sensor");
-        return CHIP_ERROR_INTERNAL;
-    }
-#endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
+//#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
+//    if (SL_STATUS_OK != Si70xxSensor::Init())
+//    {
+//    	APP_DBG("Failed to Init Sensor");
+//        return CHIP_ERROR_INTERNAL;
+//    }
+//#endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
 
     // Update Temp immediatly at bootup
     SensorTimerEventHandler(nullptr);
@@ -93,43 +112,44 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     int16_t temperature            = 0;
     static int16_t lastTemperature = 0;
 
-#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
-    int32_t tempSum   = 0;
-    uint16_t humidity = 0;
+//#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
+//    int32_t tempSum   = 0;
+//    uint16_t humidity = 0;
+//
+//    for (uint8_t i = 0; i < 100; i++)
+//    {
+//        if (SL_STATUS_OK != Si70xxSensor::GetSensorData(humidity, temperature))
+//        {
+//            APP_DBG("Failed to read Temperature !!!");
+//        }
+//        tempSum += temperature;
+//    }
+//    temperature = static_cast<int16_t>(tempSum / 100);
+//#else
+//    static uint8_t nbOfRepetition = 0;
+//    static uint8_t simulatedIndex = 0;
+//    if (simulatedIndex >= ArraySize(mSimulatedTemp))
+//    {
+//        simulatedIndex = 0;
+//    }
+//    temperature = mSimulatedTemp[simulatedIndex];
+//
+//    nbOfRepetition++;
+//    if (nbOfRepetition >= kSimulatedReadingFrequency)
+//    {
+//        simulatedIndex++;
+//        nbOfRepetition = 0;
+//    }
+//#endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
 
-    for (uint8_t i = 0; i < 100; i++)
-    {
-        if (SL_STATUS_OK != Si70xxSensor::GetSensorData(humidity, temperature))
-        {
-            APP_DBG("Failed to read Temperature !!!");
-        }
-        tempSum += temperature;
-    }
-    temperature = static_cast<int16_t>(tempSum / 100);
 
-#else
-    static uint8_t nbOfRepetition = 0;
-    static uint8_t simulatedIndex = 0;
-    if (simulatedIndex >= ArraySize(mSimulatedTemp))
-    {
-        simulatedIndex = 0;
-    }
-    temperature = mSimulatedTemp[simulatedIndex];
-
-    nbOfRepetition++;
-    if (nbOfRepetition >= kSimulatedReadingFrequency)
-    {
-        simulatedIndex++;
-        nbOfRepetition = 0;
-    }
-#endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
-
+    temperature = (int16_t)(AFSHT41_ReadTemperature(&tempSensor) * 100);
     APP_DBG("Sensor Temp is : %d", temperature);
 
     //MarkAttributeDirty reportState = MarkAttributeDirty::kNo;
     if ((temperature >= (lastTemperature + kMinTemperatureDelta)) || temperature <= (lastTemperature - kMinTemperatureDelta))
     {
-        //reportState = MarkAttributeDirty::kIfChanged;
+
     }
 
     lastTemperature = temperature;
@@ -139,3 +159,4 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     app::Clusters::Thermostat::Attributes::LocalTemperature::Set(kThermostatEndpoint, temperature);//, reportState);
     PlatformMgr().UnlockChipStack();
 }
+

@@ -27,7 +27,12 @@
 #include <app-common/zap-generated/attributes/Accessors.h>
 #include <cmsis_os2.h>
 #include <lib/core/CHIPError.h>
+#include "AFSHT41.h"
+#include "motor.h"
 
+extern I2C_HandleTypeDef hi2c1;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
 //#include "dbg_trace.h"
 //#include "stm_logging.h"
 
@@ -39,7 +44,9 @@ public:
 private:
     friend SensorManager & SensorMgr();
 
-    osTimerId_t mSensorTimer;
+	osTimerId_t mSensorTimer;
+	static AFSHT41 tempSensor;
+	static Motor_HandleTypeDef motor;
 
     static void SensorTimerEventHandler(void * arg);
     // Reads new generated sensor value, stores it, and updates local temperature attribute
@@ -52,3 +59,4 @@ inline SensorManager & SensorMgr()
 {
     return SensorManager::sSensorManager;
 }
+
