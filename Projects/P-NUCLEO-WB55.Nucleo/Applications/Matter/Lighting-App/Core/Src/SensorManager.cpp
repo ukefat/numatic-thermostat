@@ -28,6 +28,7 @@
 #include "AppTask.h"
 #include "dbg_trace.h"
 
+
 #if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
 #include "Si70xxSensor.h"
 #endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
@@ -40,9 +41,16 @@ using namespace chip::app;
 using namespace ::chip::DeviceLayer;
 
 constexpr EndpointId kThermostatEndpoint = 1;
-constexpr uint16_t kSensorTImerPeriodMs  = 30000; // 30s timer period
+constexpr uint16_t kSensorTImerPeriodMs  = 10000; // 30s timer period
 constexpr uint16_t kMinTemperatureDelta  = 50;    // 0.5 degree Celcius
 
+float P_max = 15.f;
+float P_min = 3.f;
+const float P_mid = (P_min + P_max) / 2.f; // 9
+const float P_half = (P_max - P_min) / 2.f; // 6
+int8_t PB = 5;
+int16_t target_position = 0;
+float output_scale = 100;
 /**********************************************************
  * Variable declarations
  *********************************************************/
@@ -55,19 +63,32 @@ static int16_t mSimulatedTemp[]               = { 2300, 2400, 2800, 2550, 2200, 
 
 
 AFSHT41 SensorManager::tempSensor = {
-		.hi2c = &hi2c1
+	.hi2c = &hi2c1
 };
+
+MPRLS_HandleTypeDef SensorManager::pressureSensor = {
+	.hi2c = &hi2c3,              // Replace with your I2C handle
+	.eoc_port = NULL,            // Not in use, set to NULL
+	.eoc_pin = 0,                // Not in use, set to 0
+	.reset_port = NULL,          // Not in use, set to NULL
+	.reset_pin = 0,              // Not in use, set to 0
+	.psi_min = 0,                // Minimum PSI range
+	.psi_max = 25,               // Maximum PSI range
+	.output_min = 0.1 * 0xFFFFFF, // Minimum transfer function value
+	.output_max = 0.9 * 0xFFFFFF, // Maximum transfer function value
+	.conversion_factor = 1 // Conversion factor for PSI to hPa // the value calculated will be in PSI change this value to the conversion PSI vs the value you want to read
+}; ///
 
 Motor_HandleTypeDef SensorManager::motor = {
 //	    .htim_encoder=    /* encoder timer handle */
 //	    .htim_pwm=     	/* PWM output timer handle */
-	    .pwm_channel=TIM_CHANNEL_1,
-	    .in1_port= GPIOC,
-	    .in1_pin= GPIO_PIN_12,
-	    .in2_port= GPIOC,
-		.in2_pin= GPIO_PIN_13,
-		.stby_port= GPIOC,
-		.stby_pin= GPIO_PIN_10
+	.pwm_channel=TIM_CHANNEL_1,
+	.in1_port= GPIOC,
+	.in1_pin= GPIO_PIN_12,
+	.in2_port= GPIOC,
+	.in2_pin= GPIO_PIN_13,
+	.stby_port= GPIOC,
+	.stby_pin= GPIO_PIN_10
 };
 
 CHIP_ERROR SensorManager::Init()
@@ -76,6 +97,8 @@ CHIP_ERROR SensorManager::Init()
     mSensorTimer = osTimerNew(SensorTimerEventHandler, osTimerPeriodic, nullptr, nullptr);
 
     AFSHT41_Init(&tempSensor);
+
+    MPRLS_Init(&pressureSensor);
 
     Motor_Init(&motor, &htim2, &htim1);
 
@@ -111,7 +134,7 @@ void SensorManager::SensorTimerEventHandler(void * arg)
 
 void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 {
-    int16_t temperature            = 0;
+    volatile int16_t temperature            = 0; //TODO: remove volatile
     static int16_t lastTemperature = 0;
 
 //#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
@@ -146,8 +169,12 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 
 
     temperature = (int16_t)(AFSHT41_ReadTemperature(&tempSensor) * 100);
-    APP_DBG("Sensor Temp is : %d", temperature);
-
+//    while(1){
+//		float pressure  = MPRLS_ReadPressure(&pressureSensor);
+//		APP_DBG("Pressure is : %d", (int)pressure);
+//
+//    }
+    float pressure  = MPRLS_ReadPressure(&pressureSensor);
     //MarkAttributeDirty reportState = MarkAttributeDirty::kNo;
     if ((temperature >= (lastTemperature + kMinTemperatureDelta)) || temperature <= (lastTemperature - kMinTemperatureDelta))
     {
@@ -155,17 +182,37 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     }
 
     lastTemperature = temperature;
+    int16_t setPoint = 0;
     PlatformMgr().LockChipStack();
-
     // The SensorMagager shouldn't be aware of the Endpoint ID TODO Fix this.
     // TODO Per Spec we should also apply the Offset stored in the same cluster before saving the temp
     app::Clusters::Thermostat::Attributes::LocalTemperature::Set(kThermostatEndpoint, temperature);//, reportState);
+    app::Clusters::Thermostat::Attributes::OccupiedHeatingSetpoint::Get(kThermostatEndpoint, &setPoint);//, reportState);
     PlatformMgr().UnlockChipStack();
-    int16_t target_position = 9000;
-    int16_t count = 0;
-    while(count != target_position) {
-    	count = __HAL_TIM_GET_COUNTER(&htim2);
-    	UpdateMotorSignal(&motor, target_position);
-    }
+
+    float error = (setPoint - temperature)/100; // get error
+    volatile float P_out = P_mid + (error/PB) * P_half; // calculate pressure output /// TODO: remove volatile
+
+    if(P_out < P_min) P_out = P_min; // clamp outputs
+    if(P_out > P_max) P_out = P_max;
+
+    float output_percent = ((P_out - P_min) / (P_max - P_min)) * output_scale; // convert to output percent 0-100%
+
+    target_position = (int16_t)((output_percent * 19100) / 100); // scale from 0 = 0% and 19100 = 100%
+	APP_DBG("====================================================================\n");
+	APP_DBG("Sensor Pressure: %d", (int)pressure);
+	APP_DBG("Temperature Difference: %d\n", (int)error);
+    APP_DBG("Target Pressure: %d\n", (int)P_out);
+    APP_DBG("Target Position: %d\n", target_position);
+    //int16_t counter = __HAL_TIM_GET_COUNTER(&htim2);
+	while(UpdateMotorSignal(&motor, target_position) == 0)
+	{
+		APP_DBG("==========================================================error: %d", __HAL_TIM_GET_COUNTER(&htim2) - target_position);
+		//osDelay(1);
+	}
+	volatile int16_t counter = __HAL_TIM_GET_COUNTER(&htim2); //TODO: remove volatile
+	APP_DBG("Final Motor Error: %d\n", __HAL_TIM_GET_COUNTER(&htim2) - target_position);
+	APP_DBG("Final Encoder Position: %d\n", __HAL_TIM_GET_COUNTER(&htim2));
+	APP_DBG("====================================================================\n");
 }
 

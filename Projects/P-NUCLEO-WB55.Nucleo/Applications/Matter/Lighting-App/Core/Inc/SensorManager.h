@@ -29,8 +29,10 @@
 #include <lib/core/CHIPError.h>
 #include "AFSHT41.h"
 #include "motor.h"
+#include "MPRLS.h"
 
 extern I2C_HandleTypeDef hi2c1;
+extern I2C_HandleTypeDef hi2c3;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 //#include "dbg_trace.h"
@@ -46,6 +48,7 @@ private:
 
 	osTimerId_t mSensorTimer;
 	static AFSHT41 tempSensor;
+	static  MPRLS_HandleTypeDef pressureSensor;
 	static Motor_HandleTypeDef motor;
 
     static void SensorTimerEventHandler(void * arg);

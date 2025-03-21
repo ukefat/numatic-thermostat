@@ -43,7 +43,7 @@ void Motor_Init(Motor_HandleTypeDef *motor, TIM_HandleTypeDef *htim_encoder, TIM
 int16_t Encoder_GetCounter(Motor_HandleTypeDef * motor);
 void Encoder_ResetCounter(Motor_HandleTypeDef *motor);
 int8_t Encoder_GetDirection(Motor_HandleTypeDef *motor);
-void UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t position);
+int UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t position);
 
 #ifdef __cplusplus
 }

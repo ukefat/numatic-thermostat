@@ -828,6 +828,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbedtls/library/xtea.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/Core/Inc/MPRLS.h</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/MPRLS.h</location>
+		</link>
+		<link>
 			<name>Application/User/Core/src/AFSHT41.c</name>
 			<type>1</type>
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/AFSHT41.c</location>
@@ -846,6 +851,11 @@
 			<name>Application/User/Core/src/LightingManager.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/LightingManager.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/src/MPRLS.c</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/MPRLS.c</location>
 		</link>
 		<link>
 			<name>Application/User/Core/src/SensorManager.cpp</name>

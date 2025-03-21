@@ -44,7 +44,7 @@ int8_t Encoder_GetDirection(Motor_HandleTypeDef *motor) {
  * change SCALE VALUE
  */
 
-void UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
+int UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
     static int previous_error = 0;
     int16_t encoder_count = __HAL_TIM_GET_COUNTER(motor->htim_encoder);
     int16_t error = target_position - encoder_count;
@@ -58,11 +58,12 @@ void UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
 
     // **Calculate PWM Output**
     output = (Kp * errorMagnitude) + (Kd * derivative);
-    output = (output / 10) * 1600; // Scale for PWM
+//    output = (output / 10) * 1600; // Scale for PWM
 
     // **Clamp PWM Output**
     if (output > 1600) output = 1600;
     if (output < 320) output = 320;
+
 
     // **Motor Direction Control**
     if (error < 0 && errorMagnitude > 5) {
@@ -79,10 +80,11 @@ void UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
         HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
-        return;  // Exit without modifying previous error
+        return 1;  // Exit without modifying previous error
     }
 
     // **Apply PWM**
     __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, output);
     previous_error = error;
+    return 0;
 }
