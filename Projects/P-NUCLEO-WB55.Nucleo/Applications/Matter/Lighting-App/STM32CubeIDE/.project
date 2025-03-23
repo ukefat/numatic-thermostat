@@ -133,6 +133,26 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_rtc_ex.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi.c</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_spi.c</location>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi.h</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_spi.h</location>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi_ex.c</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_spi_ex.c</location>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi_ex.h</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_spi_ex.h</location>
+		</link>
+		<link>
 			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_tim.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_tim.c</locationURI>
@@ -151,6 +171,11 @@
 			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_uart_ex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_uart_ex.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_ll_spi.h</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_spi.h</location>
 		</link>
 		<link>
 			<name>Application/User/Core/Inc</name>
@@ -831,6 +856,11 @@
 			<name>Application/User/Core/Inc/MPRLS.h</name>
 			<type>1</type>
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/MPRLS.h</location>
+		</link>
+		<link>
+			<name>Application/User/Core/Inc/TextContainer.hpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/TextContainer.hpp</location>
 		</link>
 		<link>
 			<name>Application/User/Core/src/AFSHT41.c</name>

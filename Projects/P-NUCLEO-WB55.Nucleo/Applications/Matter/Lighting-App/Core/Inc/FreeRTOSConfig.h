@@ -67,7 +67,7 @@
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 56 )
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)1024*25)
+#define configTOTAL_HEAP_SIZE                    ((size_t)0x12000)
 #define configMAX_TASK_NAME_LEN                  ( 32)
 #define configUSE_TRACE_FACILITY                 1
 #define configUSE_16_BIT_TICKS                   0
@@ -92,6 +92,9 @@
 #define configTIMER_TASK_PRIORITY                ( 2 )
 #define configTIMER_QUEUE_LENGTH                 10
 #define configTIMER_TASK_STACK_DEPTH             256
+
+/* The following flag must be enabled only when using newlib */
+#define configUSE_NEWLIB_REENTRANT          1
 
 /* CMSIS-RTOS V2 flags */
 #define configUSE_OS2_THREAD_SUSPEND_RESUME  1
@@ -164,6 +167,8 @@ standard names. */
 #define USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION 0
 
 /* USER CODE BEGIN Defines */
+#define configCHECK_FOR_STACK_OVERFLOW 2
+#define configUSE_MALLOC_FAILED_HOOK 1
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 //#define configOVERRIDE_DEFAULT_TICK_CONFIGURATION 1  /* required only for Keil but does not hurt otherwise */
 #define configGENERATE_RUN_TIME_STATS             1

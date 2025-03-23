@@ -1,5 +1,4 @@
 #include "motor.h"
-#include <math.h>
 #include <stdlib.h>
 
 // Initialize the Motor Struct
@@ -48,7 +47,7 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
     static int previous_error = 0;
     int16_t encoder_count = __HAL_TIM_GET_COUNTER(motor->htim_encoder);
     int16_t error = target_position - encoder_count;
-    int errorMagnitude = abs(error);
+    int errorMagnitude = error > 0 ? error : -error;
     int derivative = error - previous_error;
     int output;
 

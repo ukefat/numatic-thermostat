@@ -1,5 +1,4 @@
 #include "AFSHT41.h"
-#include <math.h>
 
 
 HAL_StatusTypeDef AFSHT41_Init(AFSHT41 *sensor) {
@@ -21,7 +20,7 @@ float AFSHT41_ReadTemperature(AFSHT41 *sensor) {
 	//TODO transmission timeout
 	status = HAL_I2C_Master_Transmit(sensor->hi2c, (AFSHT41_I2C_ADDRESS << 1), tx_buffer, sizeof(tx_buffer), 5000);
 	if (status != HAL_OK) {
-		return NAN;
+		return -99;
 	}
 	// Wait for the sensor to process the command
 	HAL_Delay(10); // 10ms delay
@@ -29,7 +28,7 @@ float AFSHT41_ReadTemperature(AFSHT41 *sensor) {
 	// Read the response
 	status = HAL_I2C_Master_Receive(sensor->hi2c, (AFSHT41_I2C_ADDRESS << 1), rx_buffer, sizeof(rx_buffer), AFSHT41_READ_TIMEOUT);
 	if (status != HAL_OK) {
-		return NAN;
+		return -99;
 	}
 
 	//t_ticks = rx_bytes[0] * 256 + rx_bytes[1]

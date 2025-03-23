@@ -31,6 +31,7 @@
 #include "stm32_lpm.h"
 #include "app_ble.h"
 #include "shci.h"
+#include "EPD_test.hpp"
 //#include "dbg_trace.h"
 
 #include "AppTask.h"
@@ -537,25 +538,53 @@ void DbgOutputTraces(uint8_t *p_data, uint16_t size, void (*cb)(void)) {
  * @param  GPIO_Pin : GPIO pin which has been activated
  * @retval None
  */
+#define DEBOUNCE_DELAY_MS 200  // Adjust debounce time as needed
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+
+  static uint32_t lastPressTime = 0;  // Store last press time
+  uint32_t currentTime = xTaskGetTickCountFromISR();  // Get system time (ticks)
+
+  if ((currentTime - lastPressTime) < pdMS_TO_TICKS(DEBOUNCE_DELAY_MS)) {
+      return;  // Ignore if press happens too soon
+  }
+  lastPressTime = currentTime;  // Update last press time
+
+  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  Button stateToSend = Button::Error;
+
 	switch (GPIO_Pin) {
-	case BUTTON_SW1_PIN:
-		APP_DBG("BUTTON 1 PUSHED !")
-		;
-		osThreadFlagsSet(OsPushButtonProcessId, 1);
-		break;
+//	case BUTTON_SW1_PIN:
+//		APP_DBG("BUTTON 1 PUSHED !")
+//		;
+//		osThreadFlagsSet(OsPushButtonProcessId, 1);
+//		break;
 
-	case BUTTON_SW2_PIN:
-		APP_DBG("BUTTON 2 PUSHED !")
-		;
-		/* Set "Switch Protocol" Task */
+//	case BUTTON_SW2_PIN:
+//		APP_DBG("BUTTON 2 PUSHED !")
+//		;
+//		/* Set "Switch Protocol" Task */
+//		break;
+//
+//	case BUTTON_SW3_PIN:
+//		APP_DBG("BUTTON 3 PUSHED !")
+//		;
+//		break;
+	case(Button_1_Pin):
+		stateToSend = Button::Up;
 		break;
-
-	case BUTTON_SW3_PIN:
-		APP_DBG("BUTTON 3 PUSHED !")
-		;
+	case(Button_2_Pin):
+		stateToSend = Button::Right;
 		break;
-
+	case(Button_3_Pin):
+		stateToSend = Button::Middle;
+		break;
+	case(Button_4_Pin):
+		stateToSend = Button::Left;
+		break;
+	case(Button_5_Pin):
+		stateToSend = Button::Down;
+		break;
 	default:
 		break;
 	}

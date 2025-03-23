@@ -20,8 +20,10 @@
 
 
 /* Includes ------------------------------------------------------------------*/
+
 #include "stm32wbxx_it.h"
 #include "app_common.h"
+#include "main.h"
 
 /* CONCURRENT MODE BLE/THREAD */
 /* External variables  -----------------------------------------------------------*/
@@ -149,20 +151,20 @@ void TIM1_TRG_COM_TIM17_IRQHandler(void)
  * @retval None
  */
 
-void PUSH_BUTTON_SW1_EXTI_IRQHandler(void)
-{
-  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW1_PIN);
-}
-
-void PUSH_BUTTON_SW2_EXTI_IRQHandler(void)
-{
-  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW2_PIN);
-}
-
-void PUSH_BUTTON_SW3_EXTI_IRQHandler(void)
-{
-  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW3_PIN);
-}
+//void PUSH_BUTTON_SW1_EXTI_IRQHandler(void)
+//{
+//  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW1_PIN);
+//}
+//
+//void PUSH_BUTTON_SW2_EXTI_IRQHandler(void)
+//{
+//  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW2_PIN);
+//}
+//
+//void PUSH_BUTTON_SW3_EXTI_IRQHandler(void)
+//{
+//  HAL_GPIO_EXTI_IRQHandler(BUTTON_SW3_PIN);
+//}
 
 #if(CFG_HW_USART1_ENABLED == 1)
 void USART1_IRQHandler(void)
@@ -199,6 +201,49 @@ void CFG_HW_LPUART1_DMA_TX_IRQHandler( void )
 /*  available peripheral interrupt handler's name please refer to the startup */
 /*  file (startup_stm32l0xx.s).                                               */
 /******************************************************************************/
+
+/**
+  * @brief This function handles EXTI line0 interrupt.
+  */
+void EXTI0_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI0_IRQn 0 */
+
+  /* USER CODE END EXTI0_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Button_1_Pin);
+  /* USER CODE BEGIN EXTI0_IRQn 1 */
+
+  /* USER CODE END EXTI0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Button_2_Pin);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line4 interrupt.
+  */
+void EXTI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_IRQn 0 */
+
+  /* USER CODE END EXTI4_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Button_5_Pin);
+  /* USER CODE BEGIN EXTI4_IRQn 1 */
+
+  /* USER CODE END EXTI4_IRQn 1 */
+}
+
 /**
  * @brief  This function handles RTC Auto wake-up interrupt request.
  * @param  None
@@ -207,6 +252,34 @@ void CFG_HW_LPUART1_DMA_TX_IRQHandler( void )
 void RTC_WKUP_IRQHandler(void)
 {
   HW_TS_RTC_Wakeup_Handler();
+}
+
+/**
+  * @brief This function handles EXTI line2 interrupt.
+  */
+void EXTI2_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+
+  /* USER CODE END EXTI2_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Button_3_Pin);
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line3 interrupt.
+  */
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Button_4_Pin);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
 }
 
 

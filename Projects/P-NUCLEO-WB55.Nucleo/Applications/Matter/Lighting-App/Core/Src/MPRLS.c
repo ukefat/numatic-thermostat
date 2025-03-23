@@ -1,5 +1,4 @@
 #include "MPRLS.h"
-#include <math.h>
 //
 
 HAL_StatusTypeDef MPRLS_Init(MPRLS_HandleTypeDef *sensor) {
@@ -45,7 +44,7 @@ float MPRLS_ReadPressure(MPRLS_HandleTypeDef *sensor) {
 
     // Start measurement
     if (HAL_I2C_Master_Transmit(sensor->hi2c, MPRLS_I2C_ADDRESS << 1, tx_buffer, 3, HAL_MAX_DELAY) != HAL_OK) {
-        return NAN;  // Error
+        return -99;  // Error
     }
 
     // Wait for EOC or poll status
@@ -53,16 +52,16 @@ float MPRLS_ReadPressure(MPRLS_HandleTypeDef *sensor) {
     if (sensor->eoc_port != NULL) {
         while (!HAL_GPIO_ReadPin(sensor->eoc_port, sensor->eoc_pin)) {
             if (HAL_GetTick() - start_time > MPRLS_READ_TIMEOUT) {
-                return NAN;  // Timeout
+                return -99;  // Timeout
             }
         }
     } else {
         do {
             status = MPRLS_ReadStatus(sensor);
             if (HAL_GetTick() - start_time > MPRLS_READ_TIMEOUT) {
-                return NAN;  // Timeout
+                return -99;  // Timeout
             }
-#ifdef _LOGGING
+#ifdef _LOGGINGmath
             printf("status %u\n", status);
 #endif
         } while (status & MPRLS_STATUS_BUSY);
@@ -70,12 +69,12 @@ float MPRLS_ReadPressure(MPRLS_HandleTypeDef *sensor) {
 
     // Read data
     if (HAL_I2C_Master_Receive(sensor->hi2c, MPRLS_I2C_ADDRESS << 1, rx_buffer, 4, HAL_MAX_DELAY) != HAL_OK) {
-        return NAN;  // Error
+        return -99;  // Error
     }
 
     // Check status byte
     if (rx_buffer[0] & (MPRLS_STATUS_FAILED | MPRLS_STATUS_MATHSAT)) {
-        return NAN;  // Error
+        return -99;  // Error
     }
 
     //calculation of pressure value according to equation 2 of datasheet

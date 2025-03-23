@@ -47,7 +47,7 @@
 #include "STM32FreeRtosHooks.h"
 #include "cmsis_os.h"
 #include "AppTask.h"
-
+#include "EPD_test.hpp"
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
@@ -58,6 +58,8 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c3;
+
+SPI_HandleTypeDef hspi1;
 
 
 RTC_HandleTypeDef hrtc = { 0 }; /**< RTC handler declaration */
@@ -75,6 +77,7 @@ static void Init_Exti(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C3_Init(void);
+static void MX_SPI1_Init(void);
 static void MX_RNG_Init(void);
 static void MX_IPCC_Init(void);
 static void PeriphCommonClock_Config(void);
@@ -82,6 +85,46 @@ static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 static void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+//COM_InitTypeDef BspCOMInit;
+
+/* Definitions for EPaper */
+osThreadId_t EPaperHandle;
+const osThreadAttr_t EPaper_attributes = {
+  .name = "EPaper",
+  .stack_size = 1024 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+
+};
+/* Definitions for xEPaperBusySemaphore */
+osSemaphoreId_t xEPaperBusySemaphoreHandle;
+const osSemaphoreAttr_t xEPaperBusySemaphore_attributes = {
+  .name = "xEPaperBusySemaphore"
+};
+/* Definitions for myBinarySem02 */
+osSemaphoreId_t myBinarySem02Handle;
+const osSemaphoreAttr_t myBinarySem02_attributes = {
+  .name = "myBinarySem02"
+};
+
+
+
+/* USER CODE BEGIN PV */
+QueueHandle_t stateQueue;
+
+QueueHandle_t buttonQueue;
+
+QueueHandle_t dataSetPointOperationQueue;
+
+
+QueueHandle_t daySelectionQueue;
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+void PeriphCommonClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_SPI1_Init(void);
+void EPaperEntry(void *argument);
 
 /* Functions Definition ------------------------------------------------------*/
 
@@ -138,6 +181,24 @@ int main(void) {
   MX_TIM2_Init();
   MX_I2C1_Init();
   MX_I2C3_Init();
+  MX_SPI1_Init();
+
+  stateQueue  = xQueueCreate(5, sizeof(Button));  // Queue can hold 5 events
+  if (stateQueue == NULL) {
+      printf("Failed to create queue!\n");
+  }
+
+  buttonQueue  = xQueueCreate(5, sizeof(State));  // Queue can hold 5 events
+  if (buttonQueue == NULL) {
+      printf("Failed to create queue!\n");
+  }
+
+  dataSetPointOperationQueue  = xQueueCreate(5, sizeof(SetPointData));  // Queue can hold 5 events
+  if (dataSetPointOperationQueue == NULL) {
+      printf("Failed to create queue!\n");
+  }
+
+  EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
 
 	/* IPCC initialisation */
 	MX_IPCC_Init();
@@ -172,7 +233,18 @@ static void MX_RNG_Init(void) {
 	/* USER CODE END RNG_Init 2 */
 
 }
-
+/* USER CODE END Header_EPaperEntry */
+void EPaperEntry(void *argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+	EPD_MainMenuWithQueue();
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END 5 */
+}
 /**
  * @brief IPCC Initialization Function
  * @param None
@@ -434,6 +506,46 @@ static void MX_I2C3_Init(void)
 }
 
 /**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
   * @brief TIM1 Initialization Function
   * @param None
   * @retval None
@@ -638,10 +750,13 @@ static void MX_GPIO_Init(void) {
 
 
 		  /*Configure GPIO pin Output Level */
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_10|GPIO_PIN_12, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12, GPIO_PIN_RESET);
 
-		  /*Configure GPIO pins : PC13 PC10 PC12 */
-		  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_10|GPIO_PIN_12;
+		  /*Configure GPIO pin Output Level */
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_9, GPIO_PIN_RESET);
+
+		  /*Configure GPIO pins : PC13 PC6 PC10 PC12 */
+		  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12;
 		  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 		  GPIO_InitStruct.Pull = GPIO_NOPULL;
 		  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -680,6 +795,31 @@ static void MX_GPIO_Init(void) {
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 		HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+		  /*Configure GPIO pins : Button_3_Pin Button_4_Pin */
+		  GPIO_InitStruct.Pin = Button_3_Pin|Button_4_Pin;
+		  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+		  GPIO_InitStruct.Pull = GPIO_PULLUP;
+		  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+		  /*Configure GPIO pin : PA2 */
+		  GPIO_InitStruct.Pin = GPIO_PIN_2;
+		  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+		  GPIO_InitStruct.Pull = GPIO_NOPULL;
+		  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+		  /*Configure GPIO pins : PA3 PA4 PA9 */
+		  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_9;
+		  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+		  GPIO_InitStruct.Pull = GPIO_NOPULL;
+		  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+		  /*Configure GPIO pins : Button_1_Pin Button_2_Pin Button_5_Pin */
+		  GPIO_InitStruct.Pin = Button_1_Pin|Button_2_Pin|Button_5_Pin;
+		  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+		  GPIO_InitStruct.Pull = GPIO_PULLUP;
+		  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
 		/**GPIO Configuration for instance 3
 		 * PB10    ------> clock
 		 * PE0     ------> data
@@ -699,6 +839,22 @@ static void MX_GPIO_Init(void) {
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	  /* EXTI interrupt init*/
+	  HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
+	  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+	  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+	  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+	  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+	  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+	  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+	  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
+	  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
+	  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
 }
 /*************************************************************
