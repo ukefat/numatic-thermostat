@@ -183,6 +183,11 @@
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc</location>
 		</link>
 		<link>
+			<name>Application/User/Core/Src</name>
+			<type>2</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src</location>
+		</link>
+		<link>
 			<name>Middlewares/FreeRTOS/Source/croutine.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/croutine.c</locationURI>
@@ -861,131 +866,6 @@
 			<name>Application/User/Core/Inc/TextContainer.hpp</name>
 			<type>1</type>
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/TextContainer.hpp</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/AFSHT41.c</name>
-			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/AFSHT41.c</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/AppTask.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/AppTask.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/CHIPProjectConfig.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Inc/CHIPProjectConfig.h</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/LightingManager.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/LightingManager.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/MPRLS.c</name>
-			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/MPRLS.c</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/SensorManager.cpp</name>
-			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/SensorManager.cpp</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/TemperatureManager.cpp</name>
-			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/TemperatureManager.cpp</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/ZclCallbacks.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/ZclCallbacks.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/app_entry.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/app_entry.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/app_main.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/main.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/entropy_hardware_poll.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/entropy_hardware_poll.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/flash_driver.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/flash_driver.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/flash_wb.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/flash_wb.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/freertos_port.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/freertos_port.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/hw_timerserver.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/hw_timerserver.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/hw_uart.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/hw_uart.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/motor.c</name>
-			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/motor.c</location>
-		</link>
-		<link>
-			<name>Application/User/Core/src/stm32_lpm_if.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32_lpm_if.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/stm32wbxx_hal_msp.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32wbxx_hal_msp.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/stm32wbxx_hal_timebase_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32wbxx_hal_timebase_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/stm32wbxx_it.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm32wbxx_it.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/stm_logging.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/stm_logging.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/syscalls.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/syscalls.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/sysmem.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/sysmem.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/Core/src/system_stm32wbxx.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/system_stm32wbxx.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/STM32_WPAN/app/app_ble.c</name>

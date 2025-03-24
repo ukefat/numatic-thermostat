@@ -552,7 +552,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
   Button stateToSend = Button::Error;
-
+    APP_DBG("BUTTON %d PUSHED !", GPIO_Pin);
 	switch (GPIO_Pin) {
 //	case BUTTON_SW1_PIN:
 //		APP_DBG("BUTTON 1 PUSHED !")

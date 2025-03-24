@@ -198,7 +198,7 @@ int main(void) {
       printf("Failed to create queue!\n");
   }
 
-//  EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
+  EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
 
 	/* IPCC initialisation */
 	MX_IPCC_Init();

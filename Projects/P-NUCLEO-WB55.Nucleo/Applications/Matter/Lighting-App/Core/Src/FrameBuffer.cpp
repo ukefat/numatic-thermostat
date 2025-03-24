@@ -43,7 +43,7 @@ void FrameBuffer::Paint_initImage(UWORD Width, UWORD Height, UWORD Rotate, UWORD
 
     this->Image = make_unique_freertos_array(Imagesize);
     if (!this->Image) {
-		printf("FrameBuffer allocation failed!\n");
+		LOG_ERROR("FrameBuffer allocation failed!\n");
     }
 	this->WidthMemory = Width;
     this->HeightMemory = Height;

@@ -31,7 +31,7 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = 0x20026EC4;    /* end of RAM */
+_estack = 0x2002FFF8; /*0x20026EC4;*/  /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x400 ;      /* required amount of heap  */
 _Min_Stack_Size = 0x1000 ;   /* required amount of stack */
@@ -41,7 +41,7 @@ MEMORY
 {
 FLASH (rx)                 : ORIGIN = 0x08000000, LENGTH = 520K
 NVM_MATTER				   : ORIGIN = 0x08082000, LENGTH = 0x3000 
-RAM1 (xrw)                 : ORIGIN = 0x20000008, LENGTH = 0x26EC4 /*0x23bfc */
+RAM1 (xrw)                 : ORIGIN = 0x20000008, LENGTH = 0x2FFF8/*0x26EC4*/ /*0x23bfc */
 RAM_SHARED (xrw)           : ORIGIN = 0x20030000, LENGTH = 10K
 }
 
