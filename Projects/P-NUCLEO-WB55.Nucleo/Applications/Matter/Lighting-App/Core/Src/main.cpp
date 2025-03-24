@@ -198,7 +198,7 @@ int main(void) {
       printf("Failed to create queue!\n");
   }
 
-  EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
+//  EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
 
 	/* IPCC initialisation */
 	MX_IPCC_Init();
@@ -528,7 +528,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -741,120 +741,124 @@ static void MX_GPIO_Init(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
-		/* GPIO Ports Clock Enable */
-		__HAL_RCC_GPIOA_CLK_ENABLE();
-		__HAL_RCC_GPIOC_CLK_ENABLE();
-		__HAL_RCC_GPIOB_CLK_ENABLE();
-		__HAL_RCC_GPIOD_CLK_ENABLE();
-		__HAL_RCC_GPIOE_CLK_ENABLE();
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOE_CLK_ENABLE();
 
 
-		  /*Configure GPIO pin Output Level */
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12, GPIO_PIN_RESET);
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12, GPIO_PIN_RESET);
 
-		  /*Configure GPIO pin Output Level */
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_9, GPIO_PIN_RESET);
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_9, GPIO_PIN_RESET);
 
-		  /*Configure GPIO pins : PC13 PC6 PC10 PC12 */
-		  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12;
-		  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		  GPIO_InitStruct.Pull = GPIO_NOPULL;
-		  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-		  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 
-    /*Configure GPIO pin : PB8 */
-    GPIO_InitStruct.Pin = GPIO_PIN_4;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/*Configure GPIO pins : PA3 PA4 PA9 */
+	GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_9|GPIO_PIN_15;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-		/* Configure GPIOs ofr LEDs bar shield */
+	/*Configure GPIO pin : PB8 */
+	GPIO_InitStruct.Pin = GPIO_PIN_4;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure GPIO pin : PB14 */
+	GPIO_InitStruct.Pin = GPIO_PIN_14;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : Button_1_Pin Button_2_Pin Button_5_Pin */
+	GPIO_InitStruct.Pin = Button_1_Pin|Button_2_Pin|Button_5_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/**GPIO Configuration for instance 2
+	* PB8     ------> clock
+	* PB4    ------> data13
+	*/
+//	GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8 | GPIO_PIN_4 ;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : PC13 PC6 PC10 PC12 */
+	GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_6|GPIO_PIN_10|GPIO_PIN_12;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+	/* Configure GPIOs ofr LEDs bar shield */
 
 
-		/**GPIO Configuration for instance 0
-		 * PC1     ------> clock
-		 * PC5     ------> data
-		 */
-		GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_5;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	/**GPIO Configuration for instance 0
+	* PC1     ------> clock
+	* PC5     ------> data
+	*/
+	GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_5;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : Button_3_Pin Button_4_Pin */
+	GPIO_InitStruct.Pin = Button_3_Pin|Button_4_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+	/**GPIO Configuration for instance 1
+	* PD14     ------> clock
+	* PD12     ------> data
+	*/
+	GPIO_InitStruct.Pin = GPIO_PIN_14 | GPIO_PIN_12;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 
-		/**GPIO Configuration for instance 1
-		 * PD14     ------> clock
-		 * PD12     ------> data
-		 */
-		GPIO_InitStruct.Pin = GPIO_PIN_14 | GPIO_PIN_12;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-		  /*Configure GPIO pins : Button_3_Pin Button_4_Pin */
-		  GPIO_InitStruct.Pin = Button_3_Pin|Button_4_Pin;
-		  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-		  GPIO_InitStruct.Pull = GPIO_PULLUP;
-		  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	/**GPIO Configuration for instance 3
+	* PB10    ------> clock
+	* PE0     ------> data
+	*/
+	GPIO_InitStruct.Pin = GPIO_PIN_0;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-		  /*Configure GPIO pin : PA2 */
-		  GPIO_InitStruct.Pin = GPIO_PIN_2;
-		  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-		  GPIO_InitStruct.Pull = GPIO_NOPULL;
-		  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-		  /*Configure GPIO pins : PA3 PA4 PA9 */
-		  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_9;
-		  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		  GPIO_InitStruct.Pull = GPIO_NOPULL;
-		  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-		  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-		  /*Configure GPIO pins : Button_1_Pin Button_2_Pin Button_5_Pin */
-		  GPIO_InitStruct.Pin = Button_1_Pin|Button_2_Pin|Button_5_Pin;
-		  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-		  GPIO_InitStruct.Pull = GPIO_PULLUP;
-		  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/* EXTI interrupt init*/
+	HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
-		/**GPIO Configuration for instance 3
-		 * PB10    ------> clock
-		 * PE0     ------> data
-		 */
-		GPIO_InitStruct.Pin = GPIO_PIN_0;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-		/**GPIO Configuration for instance 2
-		 * PB8     ------> clock
-		 * PB4    ------> data13
-		 */
-		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8 | GPIO_PIN_4 ;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-	  /* EXTI interrupt init*/
-	  HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+	HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
-	  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
-
-	  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-
-	  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-
-	  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+	HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
 }
 /*************************************************************

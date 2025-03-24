@@ -11,9 +11,9 @@
 #define RST_GPIO_Port GPIOA
 #define DC_Pin GPIO_PIN_9
 #define DC_GPIO_Port GPIOA
-#define BUSY_Pin GPIO_PIN_2
-#define BUSY_GPIO_Port GPIOA
-#define SPI_CS_Pin GPIO_PIN_3
+#define BUSY_Pin GPIO_PIN_14
+#define BUSY_GPIO_Port GPIOB
+#define SPI_CS_Pin GPIO_PIN_15
 #define SPI_CS_GPIO_Port GPIOA
 #define PWR_Pin GPIO_PIN_6
 #define PWR_GPIO_Port GPIOC
