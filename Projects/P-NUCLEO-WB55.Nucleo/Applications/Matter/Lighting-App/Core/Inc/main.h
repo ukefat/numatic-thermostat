@@ -90,9 +90,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 #define Button_1_Pin GPIO_PIN_0
-#define Button_1_GPIO_Port GPIOB
+#define Button_1_GPIO_Port GPIOD
 #define Button_2_Pin GPIO_PIN_1
-#define Button_2_GPIO_Port GPIOB
+#define Button_2_GPIO_Port GPIOD
 #define Button_3_Pin GPIO_PIN_2
 #define Button_3_GPIO_Port GPIOC
 #define Button_4_Pin GPIO_PIN_3
