@@ -70,7 +70,7 @@ PLACE_IN_SECTION("MB_MEM2") ALIGN(4) static uint8_t SystemSpareEvtBuffer[sizeof(
 PLACE_IN_SECTION("MB_MEM2") ALIGN(4) static uint8_t BleSpareEvtBuffer[sizeof(TL_PacketHeader_t) + TL_EVT_HDR_SIZE + 255];
 uint8_t g_ot_notification_allowed = 0U;
 /* Global variables ----------------------------------------------------------*/
-
+extern QueueHandle_t buttonQueue;
 /* Global function prototypes -----------------------------------------------*/
 #if(CFG_DEBUG_TRACE != 0)
 size_t DbgTraceWrite(int handle, const unsigned char *buf, size_t bufSize);
@@ -558,13 +558,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		stateToSend = Button::Up;
 		break;
 	case(Button_2_Pin):
-		stateToSend = Button::Right;
+		stateToSend = Button::Left;
 		break;
 	case(Button_3_Pin):
 		stateToSend = Button::Middle;
 		break;
 	case(Button_4_Pin):
-		stateToSend = Button::Left;
+		stateToSend = Button::Right;
 		break;
 	case(Button_5_Pin):
 		stateToSend = Button::Down;
@@ -573,9 +573,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	default:
 		break;
 	}
-	//xQueueSendFromISR( buttonQueue, &stateToSend, xHigherPriorityTaskWoken );
+	xQueueSendFromISR( buttonQueue, &stateToSend, &xHigherPriorityTaskWoken );
 
-	//portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	return;
 }
 #ifdef __cplusplus
