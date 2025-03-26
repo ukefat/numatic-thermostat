@@ -47,13 +47,29 @@
     0x0000003E, /* Cluster: Operational Credentials, Attribute: NOCs, Privilege: administer */ \
     /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: view */ \
     /* Cluster: User Label, Attribute: LabelList, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: SystemMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: view */ \
     /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: view */ \
 }
 
@@ -77,13 +93,29 @@
     0x00000000, /* Cluster: Operational Credentials, Attribute: NOCs, Privilege: administer */ \
     /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: view */ \
     /* Cluster: User Label, Attribute: LabelList, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: SystemMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: view */ \
     /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: view */ \
 }
 
@@ -107,13 +139,29 @@
     kMatterAccessPrivilegeAdminister, /* Cluster: Operational Credentials, Attribute: NOCs, Privilege: administer */ \
     /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: view */ \
     /* Cluster: User Label, Attribute: LabelList, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: view */ \
     /* Cluster: Thermostat, Attribute: SystemMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: view */ \
+    /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: view */ \
     /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: view */ \
 }
 
@@ -130,13 +178,29 @@
     0x00000031, /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: administer */ \
     0x0000003F, /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: manage */ \
     0x00000041, /* Cluster: User Label, Attribute: LabelList, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: manage */ \
     0x00000201, /* Cluster: Thermostat, Attribute: SystemMode, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACType, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: manage */ \
     0x00000204, /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: manage */ \
 }
 
@@ -151,13 +215,29 @@
     0x00000004, /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: administer */ \
     0x00000000, /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: manage */ \
     0x00000000, /* Cluster: User Label, Attribute: LabelList, Privilege: manage */ \
+    0x00000009, /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: manage */ \
+    0x00000010, /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: manage */ \
     0x00000015, /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: manage */ \
     0x00000016, /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: manage */ \
     0x00000017, /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: manage */ \
     0x00000018, /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: manage */ \
     0x00000019, /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: manage */ \
+    0x0000001A, /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: manage */ \
     0x0000001B, /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: manage */ \
     0x0000001C, /* Cluster: Thermostat, Attribute: SystemMode, Privilege: manage */ \
+    0x00000023, /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: manage */ \
+    0x00000024, /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: manage */ \
+    0x00000025, /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: manage */ \
+    0x00000034, /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: manage */ \
+    0x00000037, /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: manage */ \
+    0x0000003A, /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: manage */ \
+    0x00000040, /* Cluster: Thermostat, Attribute: ACType, Privilege: manage */ \
+    0x00000041, /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: manage */ \
+    0x00000042, /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: manage */ \
+    0x00000043, /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: manage */ \
+    0x00000044, /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: manage */ \
+    0x00000045, /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: manage */ \
+    0x00000047, /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: manage */ \
     0x00000001, /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: manage */ \
 }
 
@@ -172,13 +252,29 @@
     kMatterAccessPrivilegeAdminister, /* Cluster: Network Commissioning, Attribute: InterfaceEnabled, Privilege: administer */ \
     kMatterAccessPrivilegeManage, /* Cluster: Group Key Management, Attribute: GroupKeyMap, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: User Label, Attribute: LabelList, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: HVACSystemTypeConfiguration, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: LocalTemperatureCalibration, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: MinHeatSetpointLimit, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: MaxHeatSetpointLimit, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: MinCoolSetpointLimit, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: MaxCoolSetpointLimit, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: MinSetpointDeadBand, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: RemoteSensing, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ControlSequenceOfOperation, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: SystemMode, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: TemperatureSetpointHold, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: TemperatureSetpointHoldDuration, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ThermostatProgrammingOperationMode, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: OccupiedSetback, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: UnoccupiedSetback, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: EmergencyHeatDelta, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACType, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACCapacity, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACRefrigerantType, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACCompressorType, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACErrorCode, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACLouverPosition, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Attribute: ACCapacityformat, Privilege: manage */ \
     kMatterAccessPrivilegeManage, /* Cluster: Thermostat User Interface Configuration, Attribute: KeypadLockout, Privilege: manage */ \
 }
 
@@ -221,6 +317,8 @@
     0x0000003F, /* Cluster: Group Key Management, Command: KeySetRead, Privilege: administer */ \
     0x0000003F, /* Cluster: Group Key Management, Command: KeySetRemove, Privilege: administer */ \
     0x0000003F, /* Cluster: Group Key Management, Command: KeySetReadAllIndices, Privilege: administer */ \
+    0x00000201, /* Cluster: Thermostat, Command: SetWeeklySchedule, Privilege: manage */ \
+    0x00000201, /* Cluster: Thermostat, Command: ClearWeeklySchedule, Privilege: manage */ \
 }
 
 // Parallel array data (cluster, *command*, privilege) for invoke command
@@ -260,6 +358,8 @@
     0x00000001, /* Cluster: Group Key Management, Command: KeySetRead, Privilege: administer */ \
     0x00000003, /* Cluster: Group Key Management, Command: KeySetRemove, Privilege: administer */ \
     0x00000004, /* Cluster: Group Key Management, Command: KeySetReadAllIndices, Privilege: administer */ \
+    0x00000001, /* Cluster: Thermostat, Command: SetWeeklySchedule, Privilege: manage */ \
+    0x00000003, /* Cluster: Thermostat, Command: ClearWeeklySchedule, Privilege: manage */ \
 }
 
 // Parallel array data (cluster, command, *privilege*) for invoke command
@@ -299,6 +399,8 @@
     kMatterAccessPrivilegeAdminister, /* Cluster: Group Key Management, Command: KeySetRead, Privilege: administer */ \
     kMatterAccessPrivilegeAdminister, /* Cluster: Group Key Management, Command: KeySetRemove, Privilege: administer */ \
     kMatterAccessPrivilegeAdminister, /* Cluster: Group Key Management, Command: KeySetReadAllIndices, Privilege: administer */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Command: SetWeeklySchedule, Privilege: manage */ \
+    kMatterAccessPrivilegeManage, /* Cluster: Thermostat, Command: ClearWeeklySchedule, Privilege: manage */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////

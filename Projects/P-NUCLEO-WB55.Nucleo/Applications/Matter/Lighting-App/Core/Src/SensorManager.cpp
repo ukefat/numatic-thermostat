@@ -168,6 +168,8 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 	}
 	float final_p = (MPRLS_ReadPressure(&pressureSensor) -12.7f) * 100;
 	APP_DBG("====================================================================\n");
+	APP_DBG("Current Temperature: %d\n", (int)temperature);
+	APP_DBG("Temperature Setpoint: %d\n", (int)setPoint);
 	APP_DBG("Temperature Difference: %d\n", (int)error);
 	APP_DBG("Target Pressure: %d\n", (int)(P_out * 100));
 	APP_DBG("Actual Pressure: %d\n", (int)(final_p));

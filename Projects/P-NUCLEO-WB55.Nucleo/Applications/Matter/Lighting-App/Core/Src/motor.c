@@ -61,7 +61,7 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, MPRLS_HandleTypeDef *pressureS
 
     // **Calculate PWM Output**
     output = (Kp * errorMagnitude) + (Kd * derivative);
-    output = (output) * 1600 / 100; // Scale for PWM
+    output = (output) * 1600 / 10; // Scale for PWM todo
 
     // **Clamp PWM Output**
     if (output > 1600) output = 1600;
@@ -74,7 +74,7 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, MPRLS_HandleTypeDef *pressureS
         HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
-        APP_DBG("too low");
+        APP_DBG("=!=!=!=!=!=!=!=!=!=!=!=!=!=ALERT: PRESSURE TOO LOW=!=!=!=!=!=!=!=!=!=!=!=!=!=");
         return 1;  // Exit without modifying previous error
     }
     if(actual_pressure > 14.f && error > 0) {// stop the motor if the bound is too high and its going up
@@ -84,23 +84,19 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, MPRLS_HandleTypeDef *pressureS
         HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
-        APP_DBG("too high stopping early");
+        APP_DBG("=!=!=!=!=!=!=!=!=!=!=!=!=!=ALERT: PRESSURE TOO HIGH=!=!=!=!=!=!=!=!=!=!=!=!=!=");
         return 1;  // Exit without modifying previous error
     }
     if(actual_pressure < 0)
     {
-
+    	APP_DBG("=!=!=!=!=!=!=!=!=!=!=!=!=!=ALERT: PRESSURE CORRECTION=!=!=!=!=!=!=!=!=!=!=!=!=!=");
         // Stop motor
-        __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, 0);
+        __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, 1600);
         HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
-        APP_DBG("too high cant read pressure");
-        return 1;  // Exit without modifying previous error
+        HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_RESET);
+        return 0;
     }
-
-
-
 
     // **Motor Direction Control**
     if (error < 0 && errorMagnitude > 5) {

@@ -65,7 +65,7 @@
 #define GENERATED_DEFAULTS_COUNT (2)
 
 // This is an array of EmberAfAttributeMinMaxValue structures.
-#define GENERATED_MIN_MAX_DEFAULT_COUNT 13
+#define GENERATED_MIN_MAX_DEFAULT_COUNT 9
 #define GENERATED_MIN_MAX_DEFAULTS { \
 \
   /* Endpoint: 0, Cluster: Time Format Localization (server) */ \
@@ -75,15 +75,11 @@
   { (uint16_t)0x0, (uint16_t)0x0, (uint16_t)0x2 }, /* TemperatureUnit */ \
 \
   /* Endpoint: 1, Cluster: Thermostat (server) */ \
-  { (uint16_t)0xA28, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* OccupiedCoolingSetpoint */ \
   { (uint16_t)0x7D0, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* OccupiedHeatingSetpoint */ \
   { (uint16_t)0x2BC, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* MinHeatSetpointLimit */ \
   { (uint16_t)0xBB8, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* MaxHeatSetpointLimit */ \
-  { (uint16_t)0x640, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* MinCoolSetpointLimit */ \
-  { (uint16_t)0xC80, (uint16_t)-0x6AB3, (uint16_t)0x7FFF }, /* MaxCoolSetpointLimit */ \
-  { (uint16_t)0x19, (uint16_t)0x0, (uint16_t)0x19 }, /* MinSetpointDeadBand */ \
   { (uint16_t)0x4, (uint16_t)0x0, (uint16_t)0x5 }, /* ControlSequenceOfOperation */ \
-  { (uint16_t)0x1, (uint16_t)0x0, (uint16_t)0x7 }, /* SystemMode */ \
+  { (uint16_t)0x4, (uint16_t)0x0, (uint16_t)0x7 }, /* SystemMode */ \
 \
   /* Endpoint: 1, Cluster: Thermostat User Interface Configuration (server) */ \
   { (uint16_t)0x0, (uint16_t)0x0, (uint16_t)0x1 }, /* TemperatureDisplayMode */ \
@@ -92,7 +88,7 @@
 
 
 // This is an array of EmberAfAttributeMetadata structures.
-#define GENERATED_ATTRIBUTE_COUNT 251
+#define GENERATED_ATTRIBUTE_COUNT 248
 #define GENERATED_ATTRIBUTES { \
 \
   /* Endpoint: 0, Cluster: Identify (server) */ \
@@ -382,23 +378,20 @@
   { ZAP_EMPTY_DEFAULT(), 0x00000000, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(NULLABLE) }, /* LocalTemperature */  \
   { ZAP_SIMPLE_DEFAULT(700), 0x00000003, 2, ZAP_TYPE(INT16S), 0 }, /* AbsMinHeatSetpointLimit */  \
   { ZAP_SIMPLE_DEFAULT(3000), 0x00000004, 2, ZAP_TYPE(INT16S), 0 }, /* AbsMaxHeatSetpointLimit */  \
-  { ZAP_SIMPLE_DEFAULT(1600), 0x00000005, 2, ZAP_TYPE(INT16S), 0 }, /* AbsMinCoolSetpointLimit */  \
-  { ZAP_SIMPLE_DEFAULT(3200), 0x00000006, 2, ZAP_TYPE(INT16S), 0 }, /* AbsMaxCoolSetpointLimit */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(2), 0x00000011, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(TOKENIZE) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* OccupiedCoolingSetpoint */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(3), 0x00000012, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(TOKENIZE) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* OccupiedHeatingSetpoint */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(4), 0x00000015, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MinHeatSetpointLimit */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(5), 0x00000016, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MaxHeatSetpointLimit */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(6), 0x00000017, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MinCoolSetpointLimit */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(7), 0x00000018, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MaxCoolSetpointLimit */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(8), 0x00000019, 1, ZAP_TYPE(INT8S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MinSetpointDeadBand */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(9), 0x0000001B, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* ControlSequenceOfOperation */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(10), 0x0000001C, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(TOKENIZE) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* SystemMode */  \
-  { ZAP_SIMPLE_DEFAULT(0x23), 0x0000FFFC, 4, ZAP_TYPE(BITMAP32), 0 }, /* FeatureMap */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(2), 0x00000012, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(TOKENIZE) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* OccupiedHeatingSetpoint */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(3), 0x00000015, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MinHeatSetpointLimit */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(4), 0x00000016, 2, ZAP_TYPE(INT16S), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* MaxHeatSetpointLimit */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(5), 0x0000001B, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* ControlSequenceOfOperation */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(6), 0x0000001C, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(TOKENIZE) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* SystemMode */  \
+  { ZAP_SIMPLE_DEFAULT(0), 0x00000020, 1, ZAP_TYPE(ENUM8), 0 }, /* StartOfWeek */  \
+  { ZAP_SIMPLE_DEFAULT(7), 0x00000021, 1, ZAP_TYPE(INT8U), 0 }, /* NumberOfWeeklyTransitions */  \
+  { ZAP_SIMPLE_DEFAULT(4), 0x00000022, 1, ZAP_TYPE(INT8U), 0 }, /* NumberOfDailyTransitions */  \
+  { ZAP_SIMPLE_DEFAULT(0x9), 0x0000FFFC, 4, ZAP_TYPE(BITMAP32), 0 }, /* FeatureMap */  \
   { ZAP_SIMPLE_DEFAULT(5), 0x0000FFFD, 2, ZAP_TYPE(INT16U), 0 }, /* ClusterRevision */  \
 \
   /* Endpoint: 1, Cluster: Thermostat User Interface Configuration (server) */ \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(11), 0x00000000, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* TemperatureDisplayMode */  \
-  { ZAP_MIN_MAX_DEFAULTS_INDEX(12), 0x00000001, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* KeypadLockout */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(7), 0x00000000, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* TemperatureDisplayMode */  \
+  { ZAP_MIN_MAX_DEFAULTS_INDEX(8), 0x00000001, 1, ZAP_TYPE(ENUM8), ZAP_ATTRIBUTE_MASK(MIN_MAX) | ZAP_ATTRIBUTE_MASK(WRITABLE) }, /* KeypadLockout */  \
   { ZAP_SIMPLE_DEFAULT(0), 0x0000FFFC, 4, ZAP_TYPE(BITMAP32), 0 }, /* FeatureMap */  \
   { ZAP_SIMPLE_DEFAULT(1), 0x0000FFFD, 2, ZAP_TYPE(INT16U), 0 }, /* ClusterRevision */  \
 }
@@ -588,6 +581,12 @@ const EmberAfGenericClusterFunction chipFuncArrayThermostatUserInterfaceConfigur
   /* Endpoint: 1, Cluster: Thermostat (server) */\
   /*   AcceptedCommandList (index=87) */ \
   0x00000000 /* SetpointRaiseLower */, \
+  0x00000001 /* SetWeeklySchedule */, \
+  0x00000002 /* GetWeeklySchedule */, \
+  0x00000003 /* ClearWeeklySchedule */, \
+  chip::kInvalidCommandId /* end of list */, \
+  /*   GeneratedCommandList (index=92)*/ \
+  0x00000000 /* GetWeeklyScheduleResponse */, \
   chip::kInvalidCommandId /* end of list */, \
 }
 
@@ -965,19 +964,19 @@ const EmberAfGenericClusterFunction chipFuncArrayThermostatUserInterfaceConfigur
       /* Endpoint: 1, Cluster: Thermostat (server) */ \
       .clusterId = 0x00000201, \
       .attributes = ZAP_ATTRIBUTE_INDEX(231), \
-      .attributeCount = 16, \
-      .clusterSize = 31, \
+      .attributeCount = 13, \
+      .clusterSize = 23, \
       .mask = ZAP_CLUSTER_MASK(SERVER) | ZAP_CLUSTER_MASK(INIT_FUNCTION) | ZAP_CLUSTER_MASK(PRE_ATTRIBUTE_CHANGED_FUNCTION), \
       .functions = chipFuncArrayThermostatServer, \
       .acceptedCommandList = ZAP_GENERATED_COMMANDS_INDEX( 87 ), \
-      .generatedCommandList = nullptr, \
+      .generatedCommandList = ZAP_GENERATED_COMMANDS_INDEX( 92 ), \
       .eventList = nullptr, \
       .eventCount = 0, \
     },\
   { \
       /* Endpoint: 1, Cluster: Thermostat User Interface Configuration (server) */ \
       .clusterId = 0x00000204, \
-      .attributes = ZAP_ATTRIBUTE_INDEX(247), \
+      .attributes = ZAP_ATTRIBUTE_INDEX(244), \
       .attributeCount = 4, \
       .clusterSize = 8, \
       .mask = ZAP_CLUSTER_MASK(SERVER) | ZAP_CLUSTER_MASK(PRE_ATTRIBUTE_CHANGED_FUNCTION), \
@@ -996,7 +995,7 @@ const EmberAfGenericClusterFunction chipFuncArrayThermostatUserInterfaceConfigur
 // This is an array of EmberAfEndpointType structures.
 #define GENERATED_ENDPOINT_TYPES { \
   { ZAP_CLUSTER_INDEX(0), 23, 247 }, \
-  { ZAP_CLUSTER_INDEX(23), 7, 71 }, \
+  { ZAP_CLUSTER_INDEX(23), 7, 63 }, \
 }
 
 
@@ -1011,7 +1010,7 @@ static_assert(ATTRIBUTE_LARGEST <= CHIP_CONFIG_MAX_ATTRIBUTE_STORE_ELEMENT_SIZE,
 #define ATTRIBUTE_SINGLETONS_SIZE (37)
 
 // Total size of attribute storage
-#define ATTRIBUTE_MAX_SIZE (318)
+#define ATTRIBUTE_MAX_SIZE (310)
 
 // Number of fixed endpoints
 #define FIXED_ENDPOINT_COUNT (2)

@@ -51,21 +51,20 @@ TemperatureManager TemperatureManager::sTempMgr;
 
 CHIP_ERROR TemperatureManager::Init()
 {
-    APP_DBG("Is anything working ziggy?");
     app::DataModel::Nullable<int16_t> temp;
-    int16_t heatingSetpoint, coolingSetpoint;
+    int16_t heatingSetpoint;
     ThermostatSystemMode systemMode;
 
     PlatformMgr().LockChipStack();
     ThermAttr::LocalTemperature::Get(kThermostatEndpoint, temp);
-    ThermAttr::OccupiedCoolingSetpoint::Get(kThermostatEndpoint, &coolingSetpoint);
+    //ThermAttr::OccupiedCoolingSetpoint::Get(kThermostatEndpoint, &coolingSetpoint);
     ThermAttr::OccupiedHeatingSetpoint::Get(kThermostatEndpoint, &heatingSetpoint);
     ThermAttr::SystemMode::Get(kThermostatEndpoint, (uint8_t*) &systemMode);
     PlatformMgr().UnlockChipStack();
 
     mCurrentTempCelsius     = ConvertToPrintableTemp((temp.IsNull()) ? static_cast<int16_t>(0.0) : temp.Value());
-    mHeatingCelsiusSetPoint = ConvertToPrintableTemp(coolingSetpoint);
-    mCoolingCelsiusSetPoint = ConvertToPrintableTemp(heatingSetpoint);
+    mHeatingCelsiusSetPoint = ConvertToPrintableTemp(heatingSetpoint);
+    //mCoolingCelsiusSetPoint = ConvertToPrintableTemp(coolingSetpoint);
 
     switch (systemMode)
     {
