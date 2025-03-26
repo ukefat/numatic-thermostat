@@ -46,7 +46,10 @@ public:
 	void displayActiveScreen();
 
 
-
+	void cancel();
+	void save();
+	void increaseValue();
+	void decreaseValue();
 	//STATE FUNCTIONS
 
 	void buttonPress(Button bt);
@@ -54,7 +57,7 @@ public:
 	void nextInteractable();
 	void prevInteractable();
 
-
+	void deleteSetPoint();
 private:
 	EPD_4in26* EPDController;
     Screen* currentScreen;

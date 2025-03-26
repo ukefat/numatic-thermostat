@@ -26,16 +26,11 @@ public:
 			isInteractable = true;
 		}
 		else{
-			false;
+			isInteractable = false;
 		}
 	}
 
     virtual void draw(FrameBuffer& fb, UWORD xMove = 0, UWORD yMove =0) = 0;
-
-    virtual void onInteract(){
-    	if(onSelect)
-    		onSelect();
-    };
 
     virtual void clearArea(FrameBuffer& fb, UWORD xStart = 0, UWORD yStart =0){}
 
@@ -45,15 +40,15 @@ public:
     	updated = true;
     }
 
+    virtual void resetClear(){}
+
     void triggerAction() {
-    	if (onSelect)
+    	if (onSelect && isInteractable)
     		onSelect();
     }
 
     bool interactable(){
-    	if (onSelect)
-    		return true;
-    	return false;
+    	return isInteractable;
     }
 
     void setInteractability(bool i){
@@ -62,6 +57,7 @@ public:
 
     void addCallback(Callback cb){
     	onSelect = cb;
+    	isInteractable = true;
     }
 
     virtual ~Drawable() = default;

@@ -19,21 +19,36 @@ protected:
 	UWORD xStart,yStart, xEnd, yEnd, color;
 	DOT_PIXEL lineWidth;
 	DRAW_FILL fill;
+
+	bool clear;
   /* data */
 public:
 
+
+
 	void draw(FrameBuffer& fb, UWORD xStart = 0, UWORD yStart =0) override {
 
-		if (updated || firstDraw ){
+		if(clear){
+			clearArea(fb,xStart,yStart);
+			updated = true;
+			clear = false;
+		}
+		if (updated ){
+//			fb.Paint_ClearWindows
 			fb.Paint_DrawRectangle(this->xStart + xStart, this->yStart+ yStart, xEnd+ xStart, yEnd+ yStart, color, lineWidth, fill);
 		}
 		firstDraw = false;
 		updated = false;
     }
 
+	virtual void resetClear() override {
+		clear = true;
+	}
+
     void clearArea(FrameBuffer& fb, UWORD xStart = 0, UWORD yStart =0) override {
 //    	updated = true;
     	fb.Paint_ClearWindows(this->xStart + xStart, this->yStart+ yStart, xEnd+ xStart, yEnd+ yStart, color==BLACK?WHITE:BLACK);
+    	clear = false;
     }
 
 
@@ -41,7 +56,7 @@ public:
     		Callback onSelect = nullptr,
     		UWORD Rotate_ = ROTATE_0, UWORD Mirror_ = MIRROR_NONE, UWORD layer_ = 0 ):
     	Drawable(onSelect, Rotate_, Mirror_,  layer_),
-    	xStart(xStart), yStart(yStart), xEnd(xEnd), yEnd(yEnd), color(color), lineWidth(lineWidth), fill(fill) {}
+    	xStart(xStart), yStart(yStart), xEnd(xEnd), yEnd(yEnd), color(color), lineWidth(lineWidth), fill(fill), clear(false) {}
     ~Rectangle(){}
 
 	UWORD getColor() const {
@@ -111,8 +126,10 @@ private:
 	virtual void highlight(bool isSelected) override{
 		if(isSelected){
 			this->fill = DRAW_FILL_FULL;
+
 		}else {
 			this->fill = DRAW_FILL_EMPTY;
+			clear = true;
 		}
 		updated = true;
 	}

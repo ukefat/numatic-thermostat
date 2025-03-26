@@ -43,7 +43,7 @@ void FrameBuffer::Paint_initImage(UWORD Width, UWORD Height, UWORD Rotate, UWORD
 
     this->Image = make_unique_freertos_array(Imagesize);
     if (!this->Image) {
-		LOG_ERROR("FrameBuffer allocation failed!\n");
+		printf("FrameBuffer allocation failed!\n");
     }
 	this->WidthMemory = Width;
     this->HeightMemory = Height;
@@ -776,7 +776,7 @@ void FrameBuffer::Paint_DrawNumDecimals(UWORD Xpoint, UWORD Ypoint, double Nummb
     }
 
     //show
-    Paint_DrawString_EN(Xpoint, Ypoint, (const char*)pStr, Font, Color_Background, Color_Foreground);
+    Paint_DrawString_EN(Xpoint, Ypoint, (const char*)pStr, Font, Color_Foreground, Color_Background);
 }
 
 /******************************************************************************

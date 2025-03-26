@@ -42,7 +42,7 @@ class SensorManager
 {
 public:
     CHIP_ERROR Init();
-
+    void updateTempSetpoint(int16_t setPoint);
 private:
     friend SensorManager & SensorMgr();
 

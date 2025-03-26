@@ -538,7 +538,7 @@ void DbgOutputTraces(uint8_t *p_data, uint16_t size, void (*cb)(void)) {
  * @param  GPIO_Pin : GPIO pin which has been activated
  * @retval None
  */
-#define DEBOUNCE_DELAY_MS 200  // Adjust debounce time as needed
+#define DEBOUNCE_DELAY_MS 400  // Adjust debounce time as needed
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 

@@ -176,3 +176,8 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 	APP_DBG("====================================================================\n");
 }
 
+void SensorManager::updateTempSetpoint(int16_t setPoint){
+	PlatformMgr().LockChipStack();
+	    app::Clusters::Thermostat::Attributes::OccupiedHeatingSetpoint::Set(kThermostatEndpoint, setPoint);//, reportState);
+	PlatformMgr().UnlockChipStack();
+}

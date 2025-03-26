@@ -14,6 +14,12 @@ void ScreenManager::initFirstTime(){
 	}
 }
 
+void ScreenManager::deleteSetPoint(){
+	if (currentScreen){
+		currentScreen->deleteSetPoint();
+	}
+}
+
 void ScreenManager::addScreen(ScreenType screentype, Screen* scr) {
     size_t index = static_cast<size_t>(screentype);
     if (index < static_cast<size_t>(ScreenType::MaxScreens)) {

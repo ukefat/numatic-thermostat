@@ -46,6 +46,8 @@
 
 #endif
 
+#define MAX_SETPOINTS_PER_DAY 4
+#define DAYS_IN_WEEK 7
 #define RTOS 1
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -117,6 +119,7 @@ void Error_Handler(void);
 #define UWORD   uint16_t
 #define UDOUBLE uint32_t
 
+void lukeisfuckingretardisthehoelessmostincooherenceioadnawdnowa(char * buffer, int size, float val);
 
 /* USER CODE END Private defines */
 

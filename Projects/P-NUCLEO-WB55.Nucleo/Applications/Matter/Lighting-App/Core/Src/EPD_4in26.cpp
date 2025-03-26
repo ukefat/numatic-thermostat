@@ -12,20 +12,20 @@ extern SemaphoreHandle_t xEPaperBusySemaphoreHandle;
 
 extern SPI_HandleTypeDef hspi1;
 
-//#define RST_Pin GPIO_PIN_5
-//#define RST_GPIO_Port GPIOA
-//#define DC_Pin GPIO_PIN_9
-//#define DC_GPIO_Port GPIOA
-//#define BUSY_Pin GPIO_PIN_8
-//#define BUSY_GPIO_Port GPIOA
-//#define SPI_CS_Pin GPIO_PIN_3
-//#define SPI_CS_GPIO_Port GPIOA
-//#define PWR_Pin GPIO_PIN_6
-//#define PWR_GPIO_Port GPIOA
-//#define DIN_Pin GPIO_PIN_7
-//#define DIN_GPIO_Port GPIOA
-//#define SCK_Pin GPIO_PIN_1
-//#define SCK_GPIO_Port GPIOA
+#define RST_Pin GPIO_PIN_5
+#define RST_GPIO_Port GPIOA
+#define DC_Pin GPIO_PIN_9
+#define DC_GPIO_Port GPIOA
+#define BUSY_Pin GPIO_PIN_8
+#define BUSY_GPIO_Port GPIOA
+#define SPI_CS_Pin GPIO_PIN_3
+#define SPI_CS_GPIO_Port GPIOA
+#define PWR_Pin GPIO_PIN_6
+#define PWR_GPIO_Port GPIOA
+#define DIN_Pin GPIO_PIN_7
+#define DIN_GPIO_Port GPIOA
+#define SCK_Pin GPIO_PIN_1
+#define SCK_GPIO_Port GPIOA
 
 EPD_4in26::EPD_4in26():
 	rstPort(RST_GPIO_Port), rstPin(RST_Pin),
