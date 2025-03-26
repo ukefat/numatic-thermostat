@@ -58,7 +58,7 @@
  *
  * The stack size of the chip task.
  */
-#define CHIP_DEVICE_CONFIG_CHIP_TASK_STACK_SIZE (8 * 1024)
+#define CHIP_DEVICE_CONFIG_CHIP_TASK_STACK_SIZE (6 * 1024)
 
 /**
  * CHIP_DEVICE_CONFIG_CHIP_TASK_PRIORITY
@@ -88,7 +88,7 @@
  *
  * Reduce packet buffer pool size to 8 (default 15) to reduce ram consumption
  */
-#define CHIP_SYSTEM_CONFIG_PACKETBUFFER_POOL_SIZE 8
+#define CHIP_SYSTEM_CONFIG_PACKETBUFFER_POOL_SIZE 7
 
 #define CHIP_DEVICE_CONFIG_ENABLE_WIFI_TELEMETRY 0
 #define CHIP_DEVICE_CONFIG_ENABLE_THREAD_TELEMETRY 0

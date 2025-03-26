@@ -239,6 +239,7 @@ void EPaperEntry(void *argument)
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
 	EPD_MainMenuWithQueue();
+//	EPD_basic_controller_test();
   for(;;)
   {
     osDelay(1);

@@ -271,6 +271,7 @@ void AppTask::ButtonEventHandler(Push_Button_st *Button) {
 void AppTask::TimerEventHandler(TimerHandle_t xTimer) {
 
     NvmTimerCpt++;
+    APP_DBG("The nvm counter %d", NvmTimerCpt);
     if (BSP_PB_GetState(BUTTON_SW1) == 0) {
         NvmButtonStateCpt++;
     }
@@ -342,25 +343,26 @@ void AppTask::UpdateLEDs(void) {
 }
 
 void AppTask::UpdateNvmEventHandler(AppEvent *aEvent) {
-    uint8_t err = 0;
-
-    if (sAppTask.mFunction == kFunction_SaveNvm) {
-        if (sIsThreadProvisioned && sIsThreadEnabled) {
-            chip::Thread::OperationalDataset dataset { };
-            DeviceLayer::ThreadStackMgrImpl().GetThreadProvision(dataset);
-            ByteSpan datasetbyte = dataset.AsByteSpan();
-            KeyValueStoreMgr().Put(STM32ThreadDataSet, datasetbyte.data(), datasetbyte.size());
-        }
-        err = NM_Dump();
-        if (err == 0) {
-            APP_DBG("SAVE NVM");
-        } else {
-            APP_DBG("Failed to SAVE NVM");
-            // restart timer to save nvm later
-            xTimerStart(DelayNvmTimer, 0);
-        }
-
-    } else if (sAppTask.mFunction == kFunction_FactoryReset) {
+//    uint8_t err = 0;
+//
+//    if (sAppTask.mFunction == kFunction_SaveNvm) {
+//        if (sIsThreadProvisioned && sIsThreadEnabled) {
+//            chip::Thread::OperationalDataset dataset { };
+//            DeviceLayer::ThreadStackMgrImpl().GetThreadProvision(dataset);
+//            ByteSpan datasetbyte = dataset.AsByteSpan();
+//            KeyValueStoreMgr().Put(STM32ThreadDataSet, datasetbyte.data(), datasetbyte.size());
+//        }
+//        err = NM_Dump();
+//        if (err == 0) {
+//            APP_DBG("SAVE NVM");
+//        } else {
+//            APP_DBG("Failed to SAVE NVM");
+//            // restart timer to save nvm later
+//            xTimerStart(DelayNvmTimer, 0);
+//        }
+//
+//    } else
+	if (sAppTask.mFunction == kFunction_FactoryReset) {
         APP_DBG("FACTORY RESET");
         NM_ResetFactory();
     }

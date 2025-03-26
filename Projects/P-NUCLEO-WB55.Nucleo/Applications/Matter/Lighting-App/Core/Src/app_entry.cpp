@@ -554,22 +554,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   Button stateToSend = Button::Error;
     APP_DBG("BUTTON %d PUSHED !", GPIO_Pin);
 	switch (GPIO_Pin) {
-//	case BUTTON_SW1_PIN:
-//		APP_DBG("BUTTON 1 PUSHED !")
-//		;
-//		osThreadFlagsSet(OsPushButtonProcessId, 1);
-//		break;
-
-//	case BUTTON_SW2_PIN:
-//		APP_DBG("BUTTON 2 PUSHED !")
-//		;
-//		/* Set "Switch Protocol" Task */
-//		break;
-//
-//	case BUTTON_SW3_PIN:
-//		APP_DBG("BUTTON 3 PUSHED !")
-//		;
-//		break;
 	case(Button_1_Pin):
 		stateToSend = Button::Up;
 		break;
@@ -584,11 +568,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		break;
 	case(Button_5_Pin):
 		stateToSend = Button::Down;
+		osThreadFlagsSet(OsPushButtonProcessId, 1);
 		break;
 	default:
 		break;
 	}
+	//xQueueSendFromISR( buttonQueue, &stateToSend, xHigherPriorityTaskWoken );
 
+	//portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	return;
 }
 #ifdef __cplusplus

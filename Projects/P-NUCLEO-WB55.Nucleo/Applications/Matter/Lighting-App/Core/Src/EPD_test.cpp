@@ -5,7 +5,6 @@
 #include "Circle.h"
 #include "main.h"
 #include "ScreenManager.h"
-#include <queue>
 #include "Debug.h"
 #include "Container.h"
 #include "BitMap.hpp"
@@ -924,7 +923,7 @@ void EPD_Clear(){
 
 void EPD_EventHandling(){
 
-	std::queue<State> q;
+//	std::queue<State> q;
 //	q.push(State::Interact);
 
 	EPD_4in26 ePaper(RST_GPIO_Port, RST_Pin,
@@ -984,22 +983,22 @@ void EPD_EventHandling(){
 	screenManager.initFirstTime();
 	screenManager.displayActiveScreen();
 
-	for (; !q.empty(); q.pop()){
-		State myState = q.front();
+//	for (; !q.empty(); q.pop()){
+//		State myState = q.front();
+////
+////		if(myState == State::Interact){
+////			screenManager.onInteract();
+////		}
+////
+////		if(myState == State::Next){
+////			screenManager.nextInteractable();
+////			screenManager.updateActiveScreen();
+//////			LOG_INFO("MESSAGE WAS RECIEVED");
+////		}
 //
-//		if(myState == State::Interact){
-//			screenManager.onInteract();
-//		}
 //
-//		if(myState == State::Next){
-//			screenManager.nextInteractable();
-//			screenManager.updateActiveScreen();
-////			LOG_INFO("MESSAGE WAS RECIEVED");
-//		}
-
-
-//		vTaskDelay(pdMS_TO_TICKS(1000);
-	}
+////		vTaskDelay(pdMS_TO_TICKS(1000);
+//	}
 }
 
 void EPD_ScreenManager_PartialRefresh(){

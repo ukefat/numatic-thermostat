@@ -1,5 +1,8 @@
 #include "motor.h"
 #include <stdlib.h>
+#include "dbg_trace.h"
+#include "app_conf.h"
+#include "stm_logging.h"
 
 // Initialize the Motor Struct
 void Motor_Init(Motor_HandleTypeDef *motor, TIM_HandleTypeDef *htim_encoder, TIM_HandleTypeDef *htim_pwm) {
@@ -43,13 +46,14 @@ int8_t Encoder_GetDirection(Motor_HandleTypeDef *motor) {
  * change SCALE VALUE
  */
 
-int UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
-    static int previous_error = 0;
-    int16_t encoder_count = __HAL_TIM_GET_COUNTER(motor->htim_encoder);
-    int16_t error = target_position - encoder_count;
-    int errorMagnitude = error > 0 ? error : -error;
-    int derivative = error - previous_error;
-    int output;
+int UpdateMotorSignal(Motor_HandleTypeDef *motor, MPRLS_HandleTypeDef *pressureSensor, float target_pressure) {
+    static float previous_error = 0;
+//    int16_t encoder_count = __HAL_TIM_GET_COUNTER(motor->htim_encoder);
+    float actual_pressure  = MPRLS_ReadPressure(pressureSensor) - 12.7f;
+    float error = (target_pressure - actual_pressure) * 100;
+    float errorMagnitude = abs(error);
+    float derivative = error - previous_error;
+    float output;
 
     // **PID Coefficients**
     float Kp = 0.5;
@@ -57,11 +61,45 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, int16_t target_position) {
 
     // **Calculate PWM Output**
     output = (Kp * errorMagnitude) + (Kd * derivative);
-//    output = (output / 10) * 1600; // Scale for PWM
+    output = (output) * 1600 / 100; // Scale for PWM
 
     // **Clamp PWM Output**
     if (output > 1600) output = 1600;
     if (output < 320) output = 320;
+
+    if(actual_pressure < 2.8f && actual_pressure > 0.f && error < 0) {// stop the motor if the bound is too low and its going down
+
+        // Stop motor
+        __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, 0);
+        HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
+        APP_DBG("too low");
+        return 1;  // Exit without modifying previous error
+    }
+    if(actual_pressure > 14.f && error > 0) {// stop the motor if the bound is too high and its going up
+
+        // Stop motor
+        __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, 0);
+        HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
+        APP_DBG("too high stopping early");
+        return 1;  // Exit without modifying previous error
+    }
+    if(actual_pressure < 0)
+    {
+
+        // Stop motor
+        __HAL_TIM_SET_COMPARE(motor->htim_pwm, motor->pwm_channel, 0);
+        HAL_GPIO_WritePin(motor->stby_port, motor->stby_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in1_port, motor->in1_pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(motor->in2_port, motor->in2_pin, GPIO_PIN_SET);
+        APP_DBG("too high cant read pressure");
+        return 1;  // Exit without modifying previous error
+    }
+
+
 
 
     // **Motor Direction Control**

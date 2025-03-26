@@ -137,44 +137,8 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     volatile int16_t temperature            = 0; //TODO: remove volatile
     static int16_t lastTemperature = 0;
 
-//#if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
-//    int32_t tempSum   = 0;
-//    uint16_t humidity = 0;
-//
-//    for (uint8_t i = 0; i < 100; i++)
-//    {
-//        if (SL_STATUS_OK != Si70xxSensor::GetSensorData(humidity, temperature))
-//        {
-//            APP_DBG("Failed to read Temperature !!!");
-//        }
-//        tempSum += temperature;
-//    }
-//    temperature = static_cast<int16_t>(tempSum / 100);
-//#else
-//    static uint8_t nbOfRepetition = 0;
-//    static uint8_t simulatedIndex = 0;
-//    if (simulatedIndex >= ArraySize(mSimulatedTemp))
-//    {
-//        simulatedIndex = 0;
-//    }
-//    temperature = mSimulatedTemp[simulatedIndex];
-//
-//    nbOfRepetition++;
-//    if (nbOfRepetition >= kSimulatedReadingFrequency)
-//    {
-//        simulatedIndex++;
-//        nbOfRepetition = 0;
-//    }
-//#endif // defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
-
-
     temperature = (int16_t)(AFSHT41_ReadTemperature(&tempSensor) * 100);
-//    while(1){
-//		float pressure  = MPRLS_ReadPressure(&pressureSensor);
-//		APP_DBG("Pressure is : %d", (int)pressure);
-//
-//    }
-    float pressure  = MPRLS_ReadPressure(&pressureSensor);
+
     //MarkAttributeDirty reportState = MarkAttributeDirty::kNo;
     if ((temperature >= (lastTemperature + kMinTemperatureDelta)) || temperature <= (lastTemperature - kMinTemperatureDelta))
     {
@@ -191,28 +155,22 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     PlatformMgr().UnlockChipStack();
 
     float error = (setPoint - temperature)/100; // get error
-    volatile float P_out = P_mid + (error/PB) * P_half; // calculate pressure output /// TODO: remove volatile
+    float P_out = P_mid - (error/PB) * P_half; // calculate pressure output /// TODO: remove volatile
 
     if(P_out < P_min) P_out = P_min; // clamp outputs
     if(P_out > P_max) P_out = P_max;
 
-    float output_percent = ((P_out - P_min) / (P_max - P_min)) * output_scale; // convert to output percent 0-100%
-
-    target_position = (int16_t)((output_percent * 19100) / 100); // scale from 0 = 0% and 19100 = 100%
-	APP_DBG("====================================================================\n");
-	APP_DBG("Sensor Pressure: %d", (int)pressure);
-	APP_DBG("Temperature Difference: %d\n", (int)error);
-    APP_DBG("Target Pressure: %d\n", (int)P_out);
-    APP_DBG("Target Position: %d\n", target_position);
-    //int16_t counter = __HAL_TIM_GET_COUNTER(&htim2);
-	while(UpdateMotorSignal(&motor, target_position) == 0)
+	while(UpdateMotorSignal(&motor, &pressureSensor, P_out) == 0)
 	{
-		APP_DBG("==========================================================error: %d", __HAL_TIM_GET_COUNTER(&htim2) - target_position);
+		float press = (MPRLS_ReadPressure(&pressureSensor) - 12.7f) * 100;
+		APP_DBG("Target Pressure: %d, \\(0-0)/ Actual Pressure: %d", (int)(P_out * 100), (int)(press));
 		//osDelay(1);
 	}
-	volatile int16_t counter = __HAL_TIM_GET_COUNTER(&htim2); //TODO: remove volatile
-	APP_DBG("Final Motor Error: %d\n", __HAL_TIM_GET_COUNTER(&htim2) - target_position);
-	APP_DBG("Final Encoder Position: %d\n", __HAL_TIM_GET_COUNTER(&htim2));
+	float final_p = (MPRLS_ReadPressure(&pressureSensor) -12.7f) * 100;
+	APP_DBG("====================================================================\n");
+	APP_DBG("Temperature Difference: %d\n", (int)error);
+	APP_DBG("Target Pressure: %d\n", (int)(P_out * 100));
+	APP_DBG("Actual Pressure: %d\n", (int)(final_p));
 	APP_DBG("====================================================================\n");
 }
 
