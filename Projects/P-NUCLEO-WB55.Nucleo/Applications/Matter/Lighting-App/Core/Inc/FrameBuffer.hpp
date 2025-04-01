@@ -10,12 +10,12 @@
 
 
 
-#include "DEV_Config.h"
+#include <Debug.hpp>
+#include <DEV_Config.hpp>
 #include "fonts.h"
 #include <vector>
 #include <memory>
 #include "FreeRTOSMemory.hpp"
-#include "Debug.h"
 #include "mcufont.h"
 /**
  * Image attributes

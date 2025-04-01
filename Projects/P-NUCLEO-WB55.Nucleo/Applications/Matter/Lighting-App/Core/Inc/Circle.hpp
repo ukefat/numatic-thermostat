@@ -8,7 +8,7 @@
 #ifndef INC_CIRCLE_H_
 #define INC_CIRCLE_H_
 
-#include "Drawable.h"
+#include "Drawable.hpp"
 
 class Circle: public Drawable
 {

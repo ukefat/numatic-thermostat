@@ -1,5 +1,5 @@
 
-#include "ScreenManager.h"
+#include "ScreenManager.hpp"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -17,6 +17,12 @@ void ScreenManager::initFirstTime(){
 void ScreenManager::deleteSetPoint(){
 	if (currentScreen){
 		currentScreen->deleteSetPoint();
+	}
+}
+
+void ScreenManager::deleteSelection(){
+	if (currentScreen){
+		currentScreen->deleteSelection();
 	}
 }
 

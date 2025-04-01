@@ -9,12 +9,12 @@
 #define INC_DRAWABLEOBJECTS_HPP_
 
 
-#include "Drawable.h"
-#include "Rectangle.h"
+#include <Circle.hpp>
+#include <Container.hpp>
+#include <Drawable.hpp>
+#include <Rectangle.hpp>
 #include "DrawText.hpp"
 #include "BitMap.hpp"
-#include "Circle.h"
-#include "Container.h"
 
 
 

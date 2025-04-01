@@ -9,7 +9,7 @@
 #define INC_DRAWTEXT_HPP_
 
 
-#include "Drawable.h"
+#include "Drawable.hpp"
 
 class DrawText: public Drawable
 {

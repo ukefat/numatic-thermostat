@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DEV_Config.h"
+#include "DEV_Config.hpp"
 #include "stm32wbxx_hal.h"
 #include "stm32wbxx_hal_gpio.h"
 #include <stdint.h>

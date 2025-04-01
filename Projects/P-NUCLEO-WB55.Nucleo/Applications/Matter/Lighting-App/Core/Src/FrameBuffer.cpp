@@ -6,9 +6,10 @@
  */
 
 
-#include "FrameBuffer.h"
-#include "DEV_Config.h"
-#include "Debug.h"
+#include <FrameBuffer.hpp>
+
+#include "DEV_Config.hpp"
+#include "Debug.hpp"
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h> //memset()

@@ -9,7 +9,7 @@
 #define INC_RECTANGLE_H_
 
 
-#include "Drawable.h"
+#include <Drawable.hpp>
 
 class Rectangle: public Drawable
 {
@@ -21,13 +21,18 @@ protected:
 	DRAW_FILL fill;
 
 	bool clear;
+	bool onlyClear;
   /* data */
 public:
 
 
 
 	void draw(FrameBuffer& fb, UWORD xStart = 0, UWORD yStart =0) override {
-
+		if(onlyClear){
+			clearArea(fb,xStart,yStart);
+			onlyClear = false;
+			return;
+		}
 		if(clear){
 			clearArea(fb,xStart,yStart);
 			updated = true;
@@ -56,11 +61,14 @@ public:
     		Callback onSelect = nullptr,
     		UWORD Rotate_ = ROTATE_0, UWORD Mirror_ = MIRROR_NONE, UWORD layer_ = 0 ):
     	Drawable(onSelect, Rotate_, Mirror_,  layer_),
-    	xStart(xStart), yStart(yStart), xEnd(xEnd), yEnd(yEnd), color(color), lineWidth(lineWidth), fill(fill), clear(false) {}
+    	xStart(xStart), yStart(yStart), xEnd(xEnd), yEnd(yEnd), color(color), lineWidth(lineWidth), fill(fill), clear(false), onlyClear(false) {}
     ~Rectangle(){}
 
 	UWORD getColor() const {
 		return color;
+	}
+	void setOnlyClear(bool clear){
+		onlyClear = clear;
 	}
 
 	void setColor( UWORD color) {

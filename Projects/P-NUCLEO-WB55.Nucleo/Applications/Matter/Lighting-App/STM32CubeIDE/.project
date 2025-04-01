@@ -868,14 +868,29 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbedtls/library/xtea.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/Core/Inc/Error.hpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/Error.hpp</location>
+		</link>
+		<link>
 			<name>Application/User/Core/Inc/MPRLS.h</name>
 			<type>1</type>
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/MPRLS.h</location>
 		</link>
 		<link>
-			<name>Application/User/Core/Inc/TextContainer.hpp</name>
+			<name>Application/User/Core/Src/Screen.cpp</name>
 			<type>1</type>
-			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc/TextContainer.hpp</location>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/Screen.cpp</location>
+		</link>
+		<link>
+			<name>Application/User/Core/Src/SetPointScreen.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/SetPointScreen.cpp</location>
+		</link>
+		<link>
+			<name>Application/User/Core/Src/WarningScreen.cpp</name>
+			<type>1</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Src/WarningScreen.cpp</location>
 		</link>
 		<link>
 			<name>Application/User/STM32_WPAN/app/app_ble.c</name>

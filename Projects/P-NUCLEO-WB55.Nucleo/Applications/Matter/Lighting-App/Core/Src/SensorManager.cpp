@@ -21,13 +21,15 @@
  * Includes
  *********************************************************/
 
+
+
 #include "app_common.h"
 #include "SensorManager.h"
 //#include "AppConfig.h"
 #include "AppEvent.h"
 #include "AppTask.h"
 #include "dbg_trace.h"
-
+#include "EPD_test.hpp"
 
 #if defined(SL_MATTER_USE_SI70XX_SENSOR) && SL_MATTER_USE_SI70XX_SENSOR
 #include "Si70xxSensor.h"
@@ -61,7 +63,7 @@ constexpr uint16_t kSimulatedReadingFrequency = (60000 / kSensorTImerPeriodMs); 
 static int16_t mSimulatedTemp[]               = { 2300, 2400, 2800, 2550, 2200, 2125, 2100, 2600, 1800, 2700 };
 #endif // !(defined(SL_MATTER_USE_SI70XX_SENSOR) && (SL_MATTER_USE_SI70XX_SENSOR))
 
-
+extern QueueHandle_t stateQueue;
 AFSHT41 SensorManager::tempSensor = {
 	.hi2c = &hi2c1
 };
@@ -145,6 +147,8 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
 
     }
 
+
+
     lastTemperature = temperature;
     int16_t setPoint = 0;
     PlatformMgr().LockChipStack();
@@ -154,18 +158,25 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     app::Clusters::Thermostat::Attributes::OccupiedHeatingSetpoint::Get(kThermostatEndpoint, &setPoint);//, reportState);
     PlatformMgr().UnlockChipStack();
 
+
+//    if(lastTemperature != temperature){
+		State state = State::UpdateTemperature;
+		xQueueSend(stateQueue, &state, portMAX_DELAY);
+//    }
+
+
     float error = (setPoint - temperature)/100; // get error
     float P_out = P_mid - (error/PB) * P_half; // calculate pressure output /// TODO: remove volatile
 
     if(P_out < P_min) P_out = P_min; // clamp outputs
     if(P_out > P_max) P_out = P_max;
 
-	while(UpdateMotorSignal(&motor, &pressureSensor, P_out) == 0)
-	{
-		float press = (MPRLS_ReadPressure(&pressureSensor) - 12.7f) * 100;
-		APP_DBG("Target Pressure: %d, \\(0-0)/ Actual Pressure: %d", (int)(P_out * 100), (int)(press));
-		//osDelay(1);
-	}
+//	while(UpdateMotorSignal(&motor, &pressureSensor, P_out) == 0)
+//	{
+//		float press = (MPRLS_ReadPressure(&pressureSensor) - 12.7f) * 100;
+//		APP_DBG("Target Pressure: %d, \\(0-0)/ Actual Pressure: %d", (int)(P_out * 100), (int)(press));
+//		//osDelay(1);
+//	}
 	float final_p = (MPRLS_ReadPressure(&pressureSensor) -12.7f) * 100;
 	APP_DBG("====================================================================\n");
 	APP_DBG("Current Temperature: %d\n", (int)temperature);
@@ -181,3 +192,20 @@ void SensorManager::updateTempSetpoint(int16_t setPoint){
 	    app::Clusters::Thermostat::Attributes::OccupiedHeatingSetpoint::Set(kThermostatEndpoint, setPoint);//, reportState);
 	PlatformMgr().UnlockChipStack();
 }
+
+int16_t SensorManager::getTempSetpoint(){
+	int16_t setPoint =0;
+	PlatformMgr().LockChipStack();
+	    app::Clusters::Thermostat::Attributes::OccupiedHeatingSetpoint::Get(kThermostatEndpoint, &setPoint);//, reportState);
+	PlatformMgr().UnlockChipStack();
+	return setPoint;
+}
+int16_t SensorManager::getTempActual(){
+	DataModel::Nullable<int16_t> tempActual;
+	PlatformMgr().LockChipStack();
+	    app::Clusters::Thermostat::Attributes::LocalTemperature::Get(kThermostatEndpoint, tempActual);//, reportState);
+	PlatformMgr().UnlockChipStack();
+	return tempActual.Value();
+}
+
+

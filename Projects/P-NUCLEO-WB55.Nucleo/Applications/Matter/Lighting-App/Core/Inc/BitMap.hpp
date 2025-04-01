@@ -8,7 +8,7 @@
 #ifndef INC_BITMAP_HPP_
 #define INC_BITMAP_HPP_
 
-#include "Drawable.h"
+#include <Drawable.hpp>
 
 class BitMap: public Drawable{
 public:

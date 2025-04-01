@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "main.h"
 //#include <app-common/zap-generated/attributes/Accessors.h>
 //#include <cmsis_os2.h>
 //#include <lib/core/CHIPError.h>
@@ -60,6 +60,7 @@ enum class State {
 	Cancel,
 	IncreaseSetPoint,
 	DecreaseSetPoint,
+	UpdateTemperature,
 	Delete,
 
 //	UpdateSetPointIncrease,

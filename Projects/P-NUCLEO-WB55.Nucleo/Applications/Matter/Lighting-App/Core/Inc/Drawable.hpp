@@ -10,7 +10,7 @@
 
 #include "main.h"
 #include "fonts.h"
-#include "FrameBuffer.h"
+#include "FrameBuffer.hpp"
 #include <functional>  // For std::function
 
 class Drawable {

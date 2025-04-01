@@ -23,9 +23,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 //#include <EPD_test.hpp>
+#include <Debug.hpp>
 #include "stm32wbxx_hal.h"
 #include "FreeRTOS.h"
-#include "Debug.h"
 #include "semphr.h"
 
 

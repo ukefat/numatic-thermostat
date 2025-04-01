@@ -43,6 +43,9 @@ class SensorManager
 public:
     CHIP_ERROR Init();
     void updateTempSetpoint(int16_t setPoint);
+    int16_t getTempSetpoint();
+    int16_t getTempActual();
+
 private:
     friend SensorManager & SensorMgr();
 
