@@ -9,7 +9,7 @@
 #define INC_DRAWABLE_H_
 
 #include "main.h"
-#include "../../Fonts/fonts.h"
+#include "fonts.h"
 #include "FrameBuffer.h"
 #include <functional>  // For std::function
 

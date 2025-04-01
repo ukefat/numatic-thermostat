@@ -178,6 +178,16 @@
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_spi.h</location>
 		</link>
 		<link>
+			<name>Application/User/Core/Fontlib</name>
+			<type>2</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Fontlib</location>
+		</link>
+		<link>
+			<name>Application/User/Core/Fonts</name>
+			<type>2</type>
+			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Fonts</location>
+		</link>
+		<link>
 			<name>Application/User/Core/Inc</name>
 			<type>2</type>
 			<location>/home/uke/hack/stmot/v1/stm32wb-matter-device-over-thread/Projects/P-NUCLEO-WB55.Nucleo/Applications/Matter/Lighting-App/Core/Inc</location>

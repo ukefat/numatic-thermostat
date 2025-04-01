@@ -15,6 +15,7 @@
 #include "queue.h"
 #include "task.h"
 #include "EPD_test.hpp"
+#include "mcufont.h"
 //#include "TextContainer.h"
 
 #define Imagesize (((EPD_4in26_WIDTH % 8 == 0)? (EPD_4in26_WIDTH / 8 ): (EPD_4in26_WIDTH / 8 + 1)) * EPD_4in26_HEIGHT)
@@ -47,7 +48,7 @@ typedef struct {
 	char setPointBuffer[50];
 	Container container = Container(0,0,0,0, [](){});
 	HighLightOnInteractRectangle rectangle = HighLightOnInteractRectangle(0, 0, setPointContainerWidth, setPointContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);;
-	HighlightableDrawText text = HighlightableDrawText(20,20,setPointBuffer,&Font24, WHITE, BLACK);
+	HighlightableDrawText text = HighlightableDrawText(20,20,setPointBuffer,"Century90limited", WHITE, BLACK);
 } SetPointContainer;
 
 
@@ -67,7 +68,7 @@ DaySchedule schedule[DAYS_IN_WEEK] = {
 SetPointData currSelectedSetPoint;
 
 
-DrawText SetPointC = DrawText(622,247,"C",&Font24, WHITE, BLACK);
+DrawText SetPointC = DrawText(622,247,"C","Century60", WHITE, BLACK);
 
 static SetPointContainer setPointOptions[MAX_SETPOINTS_PER_DAY];
 UBYTE currentDay = 0;
@@ -95,7 +96,7 @@ UWORD ContainerxStart = 325;
 
 
 
-DrawText timeText = DrawText(338,36,&time_sk,&Font24, WHITE, BLACK);
+DrawText timeText = DrawText(338,36,&time_sk,"Century60", WHITE, BLACK);
 
 BitMap battery = BitMap(gImage_battery, 0, 0, 64, 64, WHITE);
 
@@ -104,25 +105,27 @@ BitMap wifi = BitMap(gImage_wifi,730,0, 64,64,WHITE);
 
 Container setPointContainer = Container(358,121,150,150);
 Rectangle setPointRectangle = Rectangle(0,0,250,31,WHITE,DOT_PIXEL_1X1, DRAW_FILL_FULL);
-DrawText setPointText = DrawText(0,0,setPointBuffer,&Font20, WHITE, BLACK);
-DrawText actualTemperature = DrawText(302,174,temparatureBuffer,&Font24, WHITE, BLACK);
+DrawText setPointText = DrawText(0,0,setPointBuffer,"Century60", WHITE, BLACK);
+//DrawText actualTemperature = DrawText(302,174,temparatureBuffer,"Century60", WHITE, BLACK);
+DrawText actualTemperature = DrawText(302,174,"25.5°C","Century90limited", WHITE, BLACK);
+
 
 SetPointScreen setPointScreen = SetPointScreen();
 
 
 Container backContainerSetPoint = Container(169,415,containerWidth,containerHeight);
 Rectangle backRectangleSetPoint =  Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-DrawText backTextSetPoint = DrawText(20,20,"Back",&Font16, WHITE, BLACK);
+DrawText backTextSetPoint = DrawText(20,20,"Back","Century30", WHITE, BLACK);
 
 
 Container deleteContainerSetPoint = Container(331,415,containerWidth,containerHeight);
 Rectangle deleteRectangleSetPoint =  Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-DrawText deleteTextSetPoint = DrawText(20,20,"Delete",&Font16, WHITE, BLACK);
+DrawText deleteTextSetPoint = DrawText(20,20,"Delete","Century30", WHITE, BLACK);
 
 
 Container editContainerSetPoint = Container(493,415,containerWidth,containerHeight);
 Rectangle editRectangleSetPoint =  Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-DrawText editTextSetPoint = DrawText(20,20,"Edit",&Font16, WHITE, BLACK);
+DrawText editTextSetPoint = DrawText(20,20,"Edit","Century30", WHITE, BLACK);
 
 
 
@@ -137,6 +140,35 @@ EPD_4in26 ePaperGlobal(RST_GPIO_Port, RST_Pin,
 						    		PWR_GPIO_Port, PWR_Pin,
 									&hspi1
 									);
+
+
+void EPD_text(){
+    EPD_4in26 ePaper(RST_GPIO_Port, RST_Pin,
+                DC_GPIO_Port, DC_Pin,
+                SPI_CS_GPIO_Port, SPI_CS_Pin,
+                BUSY_GPIO_Port, BUSY_Pin,
+                PWR_GPIO_Port, PWR_Pin,
+                &hspi1
+                );
+    ePaper.pinInit();
+
+    ePaper.EPD_4in26_Init();
+    ePaper.EPD_4in26_Clear();
+
+    HAL_Delay(500);
+    FrameBuffer& fb = FrameBuffer::getInstance();
+    //FrameBuffer fb(frameBufferScreen,EPD_4in26_WIDTH, EPD_4in26_HEIGHT,ROTATE_0,WHITE);
+    fb.Paint_Clear(BLACK);
+    fb.Paint_DrawRectangle(80, 70, 130, 120, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+    //fb.Paint_DrawNum(10, 33, 123456789, &Font12, BLACK, WHITE);
+    fb.Paint_DrawString(0,200, "30 point font", "Century30", WHITE, WHITE);
+    fb.Paint_DrawString(0,300, "Medium.", "Century40", WHITE, WHITE);
+    fb.Paint_DrawString(0,400, "Larger ... font 123", "Century60", WHITE, WHITE);
+    fb.Paint_DrawString(0,0, "12.5 °C", "Century90limited", WHITE, WHITE);
+    ePaper.EPD_4in26_Display_Base(fb.getImage());
+
+
+}
 
 
 void updateSetPointDynamicElements(UBYTE index){
@@ -474,21 +506,21 @@ void EPD_MainMenuWithQueue(){
 
 	Container BackContainer = Container(169,415,containerWidth,containerHeight);
 	Rectangle backRectangle =  Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText backText =  DrawText(20,20,"Back",&Font20, WHITE, BLACK);
+	DrawText backText =  DrawText(20,20,"Back","Century40", WHITE, BLACK);
 
 	BackContainer.addDrawable(&backRectangle);
 	BackContainer.addDrawable(&backText);
 //
 	Container homeContainer = Container(331,415,containerWidth,containerHeight);
 //		Rectangle* homeRectangle = new Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText homeText = DrawText(20,20,"Home",&Font20, WHITE, BLACK);
+	DrawText homeText = DrawText(20,20,"Home","Century40", WHITE, BLACK);
 
 	homeContainer.addDrawable(&backRectangle);
 	homeContainer.addDrawable(&homeText);
 
 	Container selectContainer = Container(493,415,containerWidth,containerHeight);
 //		Rectangle* selectRectangle = new Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText selectText = DrawText(20,20,"Select",&Font20, WHITE, BLACK);
+	DrawText selectText = DrawText(20,20,"Select","Century40", WHITE, BLACK);
 
 	selectContainer.addDrawable(&backRectangle);
 	selectContainer.addDrawable(&selectText);
@@ -502,7 +534,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	});
 	HighLightOnInteractRectangle scheduleRectangle = HighLightOnInteractRectangle(0, 0, mainMenuWidth, mainMenuHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText scheduleText = HighlightableDrawText(20,20,"Schedule",&Font24, WHITE, BLACK);
+	HighlightableDrawText scheduleText = HighlightableDrawText(20,20,"Schedule","Century60", WHITE, BLACK);
 
 	scheduleContainer.addDrawable(&scheduleRectangle);
 	scheduleContainer.addDrawable(&scheduleText);
@@ -511,7 +543,7 @@ void EPD_MainMenuWithQueue(){
 
 	});
 	HighLightOnInteractRectangle ClockRectangle = HighLightOnInteractRectangle(0, 0, mainMenuWidth, mainMenuHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText ClockText = HighlightableDrawText(20,20,"Clock/Date",&Font24, WHITE, BLACK);
+	HighlightableDrawText ClockText = HighlightableDrawText(20,20,"Clock/Date","Century60", WHITE, BLACK);
 
 	ClockContainer.addDrawable(&ClockRectangle);
 	ClockContainer.addDrawable(&ClockText);
@@ -520,12 +552,12 @@ void EPD_MainMenuWithQueue(){
 
 	});
 	HighLightOnInteractRectangle AlertRectangle = HighLightOnInteractRectangle(0, 0, mainMenuWidth, mainMenuHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText AlertText = HighlightableDrawText(20,20,"Alerts",&Font24, WHITE, BLACK);
+	HighlightableDrawText AlertText = HighlightableDrawText(20,20,"Alerts","Century60", WHITE, BLACK);
 
 	AlertContainer.addDrawable(&AlertRectangle);
 	AlertContainer.addDrawable(&AlertText);
 
-	DrawText timeTextMainMenu = DrawText(338,20,&time_sk,&Font24, WHITE, BLACK);
+	DrawText timeTextMainMenu = DrawText(338,20,&time_sk,"Century60", WHITE, BLACK);
 
 
 
@@ -573,7 +605,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	} );
 	HighLightOnInteractRectangle mondayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText mondayText = HighlightableDrawText(20,20,"Monday",&Font24, WHITE, BLACK);
+	HighlightableDrawText mondayText = HighlightableDrawText(20,20,"Monday","Century60", WHITE, BLACK);
 
 	mondayContainer.addDrawable(&mondayRectangle);
 	mondayContainer.addDrawable(&mondayText);
@@ -584,7 +616,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle tuesdayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText tuesdayText = HighlightableDrawText(20,20,"Tuesday",&Font24, WHITE, BLACK);
+	HighlightableDrawText tuesdayText = HighlightableDrawText(20,20,"Tuesday","Century60", WHITE, BLACK);
 
 	tuesdayContainer.addDrawable(&tuesdayRectangle);
 	tuesdayContainer.addDrawable(&tuesdayText);
@@ -595,7 +627,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle wednesdayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText wednesdayText = HighlightableDrawText(20,20,"Wednesday",&Font24, WHITE, BLACK);
+	HighlightableDrawText wednesdayText = HighlightableDrawText(20,20,"Wednesday","Century60", WHITE, BLACK);
 
 	wednesdayContainer.addDrawable(&wednesdayRectangle);
 	wednesdayContainer.addDrawable(&wednesdayText);
@@ -606,7 +638,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle thursdayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText thursdayText = HighlightableDrawText(20,20,"Thursday",&Font24, WHITE, BLACK);
+	HighlightableDrawText thursdayText = HighlightableDrawText(20,20,"Thursday","Century60", WHITE, BLACK);
 
 	thursdayContainer.addDrawable(&thursdayRectangle);
 	thursdayContainer.addDrawable(&thursdayText);
@@ -617,7 +649,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle fridayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText fridayText = HighlightableDrawText(20,20,"Friday",&Font24, WHITE, BLACK);
+	HighlightableDrawText fridayText = HighlightableDrawText(20,20,"Friday","Century60", WHITE, BLACK);
 
 	fridayContainer.addDrawable(&fridayRectangle);
 	fridayContainer.addDrawable(&fridayText);
@@ -628,7 +660,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle saturdayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText saturdayText = HighlightableDrawText(20,20,"Saturday",&Font24, WHITE, BLACK);
+	HighlightableDrawText saturdayText = HighlightableDrawText(20,20,"Saturday","Century60", WHITE, BLACK);
 
 	saturdayContainer.addDrawable(&saturdayRectangle);
 	saturdayContainer.addDrawable(&saturdayText);
@@ -639,7 +671,7 @@ void EPD_MainMenuWithQueue(){
 		xQueueSend(stateQueue, &state, portMAX_DELAY);
 	}  );
 	HighLightOnInteractRectangle sundayRectangle = HighLightOnInteractRectangle(0, 0, scheduleContainerWidth, scheduleContainerHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	HighlightableDrawText sundayText = HighlightableDrawText(20,20,"Sunday",&Font24, WHITE, BLACK);
+	HighlightableDrawText sundayText = HighlightableDrawText(20,20,"Sunday","Century60", WHITE, BLACK);
 
 	sundayContainer.addDrawable(&sundayRectangle);
 	sundayContainer.addDrawable(&sundayText);
@@ -884,21 +916,21 @@ void EPD_MainMenu() {
 
 	Container* BackContainer = new Container(169,415,containerWidth,containerHeight);
 	Rectangle* rect1 = new Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText* backText = new DrawText(20,20,"Back",&Font16, WHITE, BLACK);
+	DrawText* backText = new DrawText(20,20,"Back","Century30", WHITE, BLACK);
 
 	BackContainer->addDrawable(rect1);
 	BackContainer->addDrawable(backText);
 //
 	Container* homeContainer = new Container(331,415,containerWidth,containerHeight);
 	Rectangle* homeRectangle = new Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText* homeText = new DrawText(20,20,"Home",&Font16, WHITE, BLACK);
+	DrawText* homeText = new DrawText(20,20,"Home","Century30", WHITE, BLACK);
 
 	homeContainer->addDrawable(homeRectangle);
 	homeContainer->addDrawable(homeText);
 
 	Container* selectContainer = new Container(493,415,containerWidth,containerHeight);
 	Rectangle* selectRectangle = new Rectangle(0, 0, containerWidth, containerHeight, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-	DrawText* selectText = new DrawText(20,20,"Select",&Font16, WHITE, BLACK);
+	DrawText* selectText = new DrawText(20,20,"Select","Century30", WHITE, BLACK);
 
 	selectContainer->addDrawable(selectRectangle);
 	selectContainer->addDrawable(selectText);
@@ -907,7 +939,7 @@ void EPD_MainMenu() {
 	UWORD mainMenuHeight = 93;
 	Container* scheduleContainer = new Container(26,87,mainMenuWidth,mainMenuHeight);
 	Rectangle* scheduleRectangle = new Rectangle(0, 0, mainMenuWidth, mainMenuHeight, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	DrawText* scheduleText = new DrawText(20,20,"Schedule",&Font24, WHITE, BLACK);
+	DrawText* scheduleText = new DrawText(20,20,"Schedule","Century60", WHITE, BLACK);
 
 	scheduleContainer->addDrawable(scheduleRectangle);
 	scheduleContainer->addDrawable(scheduleText);
@@ -920,7 +952,7 @@ void EPD_MainMenu() {
 	time.hasSeconds = false;
 	time.isPM = false;
 
-	DrawText* timeText = new DrawText(338,20,&time,&Font24, WHITE, BLACK);
+	DrawText* timeText = new DrawText(338,20,&time,"Century60", WHITE, BLACK);
 
 
 
@@ -986,13 +1018,13 @@ void EPD_MainScreen() {
 
 	snprintf(buffer, sizeof(buffer), "Setpoint: %dC", setPoint);
 
-	DrawText* setPointText = new DrawText(358,121,buffer,&Font16, WHITE, BLACK);
+	DrawText* setPointText = new DrawText(358,121,buffer,"Century60", WHITE, BLACK);
 
 	float temparature = 24.5;
 	char temparatureBuffer[50]; // Buffer for formatted string
 
 	snprintf(temparatureBuffer, sizeof(temparatureBuffer), "Temperature: %dC", temparature);
-	DrawText* actualTemperature = new DrawText(302,174,temparatureBuffer,&Font24, WHITE, BLACK);
+	DrawText* actualTemperature = new DrawText(302,174,temparatureBuffer,"Century90limited", WHITE, BLACK);
 
 
 	PAINT_TIME time;
@@ -1001,7 +1033,7 @@ void EPD_MainScreen() {
 	time.Min = 50;
 	time.hasSeconds = false;
 
-	DrawText* timeText = new DrawText(338,36,&time,&Font24, WHITE, BLACK);
+	DrawText* timeText = new DrawText(338,36,&time,"Century60", WHITE, BLACK);
 
 
 	BitMap* battery = new BitMap(gImage_battery, 0, 0, 64, 64, WHITE);
@@ -1546,7 +1578,7 @@ void EPD_frame_buffer_draw_test() {
 //    FrameBuffer fb(defaultImage, EPD_4in26_WIDTH, EPD_4in26_HEIGHT,ROTATE_0,WHITE);
     fb.Paint_Clear(WHITE);
     fb.Paint_DrawRectangle(80, 70, 130, 120, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-    fb.Paint_DrawNum(10, 33, 123456789, &Font12, BLACK, WHITE);
+    //fb.Paint_DrawNum(10, 33, 123456789, "Century30", BLACK, WHITE);
     ePaper.EPD_4in26_Display_Base(fb.getImage());
     vTaskDelay(pdMS_TO_TICKS(2000));
     //work / testing

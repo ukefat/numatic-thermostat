@@ -83,6 +83,7 @@ void EPD_screen_multiple_objects();
 void EPD_multiple_Screens();
 void EPD_screen_manager();
 void EPD_partial_refresh();
+void EPD_text();
 
 void EPD_ScreenManager_PartialRefreshAndScreenSwitching();
 void EPD_ScreenManager_PartialRefresh();

@@ -536,6 +536,45 @@ void FrameBuffer::Paint_DrawChar(UWORD Xpoint, UWORD Ypoint, const char Acsii_Ch
     }// Write all
 }
 
+static void pixel_callback(int16_t x, int16_t y, uint8_t count, uint8_t alpha, void *state)
+{
+    state_t *s = (state_t*)state;
+    uint32_t pos;
+    int16_t value;
+
+    if (y < 0 || y >= s->height) return;
+    if (x < 0 || x + count >= s->width) return;
+    if (alpha < 1) return;
+
+    while (count--)
+    {
+    	s->fb->Paint_SetPixel(x, y, !s->color); // black = 1 now
+        x++;
+    }
+}
+
+static uint8_t character_callback(int16_t x, int16_t y, mf_char character, void *state)
+{
+    state_t *s = (state_t*)state;
+    return mf_render_character(s->font, x, y, character, pixel_callback, state);
+}
+
+void FrameBuffer::Paint_DrawString(UWORD Xstart, UWORD Ystart, const char * pString, const char* Font, UWORD Color_Foreground, UWORD Color_Background)
+{
+
+	  state_t state = {this, EPD_4in26_WIDTH, EPD_4in26_HEIGHT, 0, nullptr, (bool)Color_Foreground};
+
+	  state.font = mf_find_font(Font);
+	  if(!state.font){
+		  this->Paint_DrawString_EN(Xstart, Ystart, "Font missing", &Font16, WHITE, BLACK); // white text
+		  return;
+	  }
+	  mf_render_aligned(state.font, Xstart, Ystart,
+		  MF_ALIGN_LEFT, pString, strlen(pString),
+		  character_callback, (void*)&state);
+
+}
+
 /******************************************************************************
 function:	Display the string
 parameter:
@@ -731,7 +770,7 @@ parameter:
     Color_Background : Select the background color
 ******************************************************************************/
 void FrameBuffer::Paint_DrawNumDecimals(UWORD Xpoint, UWORD Ypoint, double Nummber,
-                    sFONT* Font, UWORD Digit, UWORD Color_Foreground, UWORD Color_Background)
+                    const char* Font, UWORD Digit, UWORD Color_Foreground, UWORD Color_Background)
 {
     int16_t Num_Bit = 0, Str_Bit = 0;
     uint8_t Str_Array[ARRAY_LEN] = {0}, Num_Array[ARRAY_LEN] = {0};
@@ -776,7 +815,7 @@ void FrameBuffer::Paint_DrawNumDecimals(UWORD Xpoint, UWORD Ypoint, double Nummb
     }
 
     //show
-    Paint_DrawString_EN(Xpoint, Ypoint, (const char*)pStr, Font, Color_Foreground, Color_Background);
+    Paint_DrawString(Xpoint, Ypoint, (const char*)pStr, Font, Color_Foreground, Color_Background);
 }
 
 /******************************************************************************
@@ -789,32 +828,39 @@ parameter:
     Color_Foreground : Select the foreground color
     Color_Background : Select the background color
 ******************************************************************************/
-void FrameBuffer::Paint_DrawTime(UWORD Xstart, UWORD Ystart, PAINT_TIME *pTime, sFONT* Font,
+void FrameBuffer::Paint_DrawTime(UWORD Xstart, UWORD Ystart, PAINT_TIME *pTime, const char* Font,
                     UWORD Color_Foreground, UWORD Color_Background)
 {
-    uint8_t value[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char value[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 //    LOG_WARN("time seconds %d\r\n/r/n",pTime->Sec);
-    UWORD Dx = Font->Width;
+//    UWORD Dx = Font->Width;
+    char timeStr[10];
+    snprintf(timeStr, 10, "%c%c:%c%c %cM", &value[pTime->Hour / 10], &value[pTime->Hour % 10],
+    																 &value[pTime->Min / 10],
+																	 &value[pTime->Min % 10],
+																	 pTime->isPM ? 'P' : 'A' );
+    Paint_DrawString(Xstart, Ystart, timeStr, Font, Color_Background, Color_Foreground);
+
 
     //Write data into the cache
-    Paint_DrawChar(Xstart                           , Ystart, value[pTime->Hour / 10], Font, Color_Background, Color_Foreground);
-    Paint_DrawChar(Xstart + Dx                      , Ystart, value[pTime->Hour % 10], Font, Color_Background, Color_Foreground);
-    Paint_DrawChar(Xstart + Dx  + Dx / 4 + Dx / 2   , Ystart, ':'                    , Font, Color_Background, Color_Foreground);
-    Paint_DrawChar(Xstart + Dx * 2 + Dx / 2         , Ystart, value[pTime->Min / 10] , Font, Color_Background, Color_Foreground);
-    Paint_DrawChar(Xstart + Dx * 3 + Dx / 2         , Ystart, value[pTime->Min % 10] , Font, Color_Background, Color_Foreground);
+//    Paint_DrawString(Xstart                           , Ystart, &value[pTime->Hour / 10], Font, Color_Background, Color_Foreground);
+//    Paint_DrawString(Xstart + Dx                      , Ystart, &value[pTime->Hour % 10], Font, Color_Background, Color_Foreground);
+//    Paint_DrawString(Xstart + Dx  + Dx / 4 + Dx / 2   , Ystart, ":"                    , Font, Color_Background, Color_Foreground);
+//    Paint_DrawString(Xstart + Dx * 2 + Dx / 2         , Ystart, &value[pTime->Min / 10] , Font, Color_Background, Color_Foreground);
+//    Paint_DrawString(Xstart + Dx * 3 + Dx / 2         , Ystart, &value[pTime->Min % 10] , Font, Color_Background, Color_Foreground);
 
-    if(pTime->hasSeconds){
-		Paint_DrawChar(Xstart + Dx * 4 + Dx / 2 - Dx / 4, Ystart, ':'                    , Font, Color_Background, Color_Foreground);
-		Paint_DrawChar(Xstart + Dx * 5                  , Ystart, value[pTime->Sec / 10] , Font, Color_Background, Color_Foreground);
-		Paint_DrawChar(Xstart + Dx * 6                  , Ystart, value[pTime->Sec % 10] , Font, Color_Background, Color_Foreground);
-    }
-
-    UWORD additionalDX = 0;
-    if(pTime->hasSeconds){
-    	additionalDX =3;
-    }
-	Paint_DrawChar(Xstart + Dx * 5 + additionalDX       , Ystart, pTime->isPM?"P"[0]:"A"[0] , Font, Color_Background, Color_Foreground);
-	Paint_DrawChar(Xstart + Dx * 6 + additionalDX       , Ystart, "M"[0] , Font, Color_Background, Color_Foreground);
+//    if(pTime->hasSeconds){
+//    	Paint_DrawString(Xstart + Dx * 4 + Dx / 2 - Dx / 4, Ystart, ":"                    , Font, Color_Background, Color_Foreground);
+//    	Paint_DrawString(Xstart + Dx * 5                  , Ystart, &value[pTime->Sec / 10] , Font, Color_Background, Color_Foreground);
+//    	Paint_DrawString(Xstart + Dx * 6                  , Ystart, &value[pTime->Sec % 10] , Font, Color_Background, Color_Foreground);
+//    }
+//
+//    UWORD additionalDX = 0;
+//    if(pTime->hasSeconds){
+//    	additionalDX =3;
+//    }
+//	Paint_DrawString(Xstart + Dx * 5 + additionalDX       , Ystart, pTime->isPM ? "P" : "A" , Font, Color_Background, Color_Foreground);
+//	Paint_DrawString(Xstart + Dx * 6 + additionalDX       , Ystart, "M" , Font, Color_Background, Color_Foreground);
 
 }
 

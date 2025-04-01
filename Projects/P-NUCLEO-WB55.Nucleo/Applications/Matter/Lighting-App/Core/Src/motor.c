@@ -61,7 +61,7 @@ int UpdateMotorSignal(Motor_HandleTypeDef *motor, MPRLS_HandleTypeDef *pressureS
 
     // **Calculate PWM Output**
     output = (Kp * errorMagnitude) + (Kd * derivative);
-    output = (output) * 1600 / 10; // Scale for PWM todo
+    output = (output) * 1600 / 50; // Scale for PWM todo
 
     // **Clamp PWM Output**
     if (output > 1600) output = 1600;

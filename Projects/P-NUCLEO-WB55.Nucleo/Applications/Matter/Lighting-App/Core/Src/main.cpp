@@ -197,6 +197,7 @@ int main(void) {
   if (dataSetPointOperationQueue == NULL) {
       printf("Failed to create queue!\n");
   }
+	//EPD_text();
 
   EPaperHandle = osThreadNew(EPaperEntry, NULL, &EPaper_attributes);
 
@@ -239,6 +240,7 @@ void EPaperEntry(void *argument)
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
 	EPD_MainMenuWithQueue();
+	//EPD_text();
 //	EPD_basic_controller_test();
   for(;;)
   {

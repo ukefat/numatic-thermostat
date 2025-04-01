@@ -455,21 +455,21 @@ private:
 
     Container setPointHoursContainer = Container(340,60,120,130);
     HighLightOnInteractRectangle setPointHoursRectangle = HighLightOnInteractRectangle(0, 0, 120, 131, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);;
-    HighlightableDrawText setPointHoursText = HighlightableDrawText(20,20,"",&Font24, WHITE, BLACK);
+    HighlightableDrawText setPointHoursText = HighlightableDrawText(20,20,"","Century60", WHITE, BLACK);
 
 //    char minutesBuffer[50];
     Container setPointMinutesContainer = Container(502,60,120,130);
     HighLightOnInteractRectangle setPointMinutesRectangle = HighLightOnInteractRectangle(0, 0, 120, 131, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);;
-    HighlightableDrawText setPointMinutesText = HighlightableDrawText(20,20,"",&Font24, WHITE, BLACK);
+    HighlightableDrawText setPointMinutesText = HighlightableDrawText(20,20,"","Century60", WHITE, BLACK);
 
 //    char tempBuffer[50];
     Container setPointTempContainer = Container(502,240,120,131);
     HighLightOnInteractRectangle setPointTempRectangle = HighLightOnInteractRectangle(0, 0, 120, 131, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);;
-    HighlightableDrawText setPointTempText = HighlightableDrawText(20,20,"",&Font24, WHITE, BLACK);
+    HighlightableDrawText setPointTempText = HighlightableDrawText(20,20,"","Century60", WHITE, BLACK);
 
 //    Container setPointTempContainer = Container(502,240,120,131);
 //    HighLightOnInteractRectangle setPointTempRectangle = HighLightOnInteractRectangle(0, 0, 120, 131, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);;
-    HighlightableDrawText setPointAMText = HighlightableDrawText(20,20,"",&Font24, WHITE, BLACK);
+    HighlightableDrawText setPointAMText = HighlightableDrawText(20,20,"","Century60", WHITE, BLACK);
 
     bool isNewSetPoint;
 
