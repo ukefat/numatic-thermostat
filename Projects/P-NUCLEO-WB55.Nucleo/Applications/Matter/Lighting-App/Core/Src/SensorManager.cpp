@@ -171,12 +171,12 @@ void SensorManager::TemperatureUpdateEventHandler(AppEvent * aEvent)
     if(P_out < P_min) P_out = P_min; // clamp outputs
     if(P_out > P_max) P_out = P_max;
 
-//	while(UpdateMotorSignal(&motor, &pressureSensor, P_out) == 0)
-//	{
-//		float press = (MPRLS_ReadPressure(&pressureSensor) - 12.7f) * 100;
-//		APP_DBG("Target Pressure: %d, \\(0-0)/ Actual Pressure: %d", (int)(P_out * 100), (int)(press));
-//		//osDelay(1);
-//	}
+	while(UpdateMotorSignal(&motor, &pressureSensor, P_out) == 0)
+	{
+		float press = (MPRLS_ReadPressure(&pressureSensor) - 12.7f) * 100;
+		APP_DBG("Target Pressure: %d, \\(0-0)/ Actual Pressure: %d", (int)(P_out * 100), (int)(press));
+		//osDelay(1);
+	}
 	float final_p = (MPRLS_ReadPressure(&pressureSensor) -12.7f) * 100;
 	APP_DBG("====================================================================\n");
 	APP_DBG("Current Temperature: %d\n", (int)temperature);
